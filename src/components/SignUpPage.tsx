@@ -5,17 +5,19 @@ import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { Logo } from "./Logo";
-import { UserCircle, Hash, LogIn, Sparkles, Lock } from "lucide-react";
+import { UserCircle, Hash, UserPlus, Sparkles, Lock, Mail } from "lucide-react";
 
-interface LoginPageProps {
-  onLogin: (admissionNumber: string, name: string, password: string) => Promise<void>;
-  onSwitchToSignUp: () => void;
+interface SignUpPageProps {
+  onSignUp: (admissionNumber: string, name: string, email: string, password: string) => Promise<void>;
+  onSwitchToLogin: () => void;
 }
 
-export function LoginPage({ onLogin, onSwitchToSignUp }: LoginPageProps) {
+export function SignUpPage({ onSignUp, onSwitchToLogin }: SignUpPageProps) {
   const [admissionNumber, setAdmissionNumber] = useState("");
   const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -39,6 +41,14 @@ export function LoginPage({ onLogin, onSwitchToSignUp }: LoginPageProps) {
       return;
     }
 
+    // Validate email
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+      setError("Please enter a valid email address");
+      setIsLoading(false);
+      return;
+    }
+
     // Validate password
     if (password.length < 6) {
       setError("Password must be at least 6 characters long");
@@ -46,78 +56,59 @@ export function LoginPage({ onLogin, onSwitchToSignUp }: LoginPageProps) {
       return;
     }
 
+    // Validate password confirmation
+    if (password !== confirmPassword) {
+      setError("Passwords do not match");
+      setIsLoading(false);
+      return;
+    }
+
     try {
-      await onLogin(admissionNumber, name, password);
+      await onSignUp(admissionNumber, name, email, password);
     } catch (err: any) {
-      setError(err.message || "Login failed");
+      setError(err.message || "Registration failed");
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-slate-100 to-sky-100 flex items-center justify-center p-4">
-      {/* Animated background elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div
-          className="absolute top-20 left-20 w-72 h-72 bg-sky-200 rounded-full mix-blend-multiply filter blur-xl opacity-30"
-          animate={{
-            scale: [1, 1.2, 1],
-            x: [0, 50, 0],
-            y: [0, 30, 0],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-        <motion.div
-          className="absolute bottom-20 right-20 w-72 h-72 bg-gray-300 rounded-full mix-blend-multiply filter blur-xl opacity-30"
-          animate={{
-            scale: [1, 1.3, 1],
-            x: [0, -50, 0],
-            y: [0, -30, 0],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-      </div>
-
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-slate-50 to-sky-50 flex items-center justify-center p-4">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="w-full max-w-md relative z-10"
+        transition={{ duration: 0.5 }}
+        className="w-full max-w-md"
       >
-        <div className="text-center mb-8">
-          <div className="flex justify-center mb-4">
-            <Logo size="lg" showText={true} />
-          </div>
-          <motion.p
-            className="text-muted-foreground flex items-center justify-center gap-2"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.3 }}
-          >
-            <Sparkles className="h-4 w-4 text-sky-500" />
-            Discover Nairobi's Hottest Events
-            <Sparkles className="h-4 w-4 text-sky-500" />
-          </motion.p>
-        </div>
-
-        <Card className="shadow-2xl border-0">
-          <CardHeader className="space-y-1">
-            <CardTitle className="text-center">Student Login</CardTitle>
-            <CardDescription className="text-center">
-              Enter your Riara University credentials to continue
+        <Card className="border-0 shadow-2xl bg-white/80 backdrop-blur-sm">
+          <CardHeader className="text-center pb-2">
+            <motion.div
+              initial={{ scale: 0.8 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: 0.3, delay: 0.2 }}
+              className="mx-auto mb-4"
+            >
+              <Logo size="lg" />
+            </motion.div>
+            <CardTitle className="text-2xl font-bold bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent">
+              Join Cheki Events
+            </CardTitle>
+            <CardDescription className="text-gray-600">
+              Create your account to discover amazing events
             </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="pt-2">
             <form onSubmit={handleSubmit} className="space-y-4">
+              {error && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm"
+                >
+                  {error}
+                </motion.div>
+              )}
+
               <div className="space-y-2">
                 <Label htmlFor="admissionNumber" className="flex items-center gap-2">
                   <Hash className="h-4 w-4 text-sky-500" />
@@ -126,14 +117,14 @@ export function LoginPage({ onLogin, onSwitchToSignUp }: LoginPageProps) {
                 <Input
                   id="admissionNumber"
                   type="text"
-                  placeholder="24ZAD108991"
+                  placeholder="e.g., 24ZAD108991"
                   value={admissionNumber}
                   onChange={(e) => setAdmissionNumber(e.target.value.toUpperCase())}
                   className="border-2 focus:border-sky-500 h-12"
                   required
                 />
                 <p className="text-xs text-muted-foreground">
-                  Format: YYCCCNNNNNN (e.g., 24ZAD108991)
+                  Format: YYXXX123456 (e.g., 24ZAD108991)
                 </p>
               </div>
 
@@ -145,9 +136,25 @@ export function LoginPage({ onLogin, onSwitchToSignUp }: LoginPageProps) {
                 <Input
                   id="name"
                   type="text"
-                  placeholder="John Doe"
+                  placeholder="Enter your full name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
+                  className="border-2 focus:border-sky-500 h-12"
+                  required
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="email" className="flex items-center gap-2">
+                  <Mail className="h-4 w-4 text-sky-500" />
+                  Email Address
+                </Label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="your.email@example.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   className="border-2 focus:border-sky-500 h-12"
                   required
                 />
@@ -161,7 +168,7 @@ export function LoginPage({ onLogin, onSwitchToSignUp }: LoginPageProps) {
                 <Input
                   id="password"
                   type="password"
-                  placeholder="Enter your password"
+                  placeholder="Create a password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="border-2 focus:border-sky-500 h-12"
@@ -172,64 +179,55 @@ export function LoginPage({ onLogin, onSwitchToSignUp }: LoginPageProps) {
                 </p>
               </div>
 
-              {error && (
-                <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-600"
-                >
-                  {error}
-                </motion.div>
-              )}
+              <div className="space-y-2">
+                <Label htmlFor="confirmPassword" className="flex items-center gap-2">
+                  <Lock className="h-4 w-4 text-sky-500" />
+                  Confirm Password
+                </Label>
+                <Input
+                  id="confirmPassword"
+                  type="password"
+                  placeholder="Confirm your password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  className="border-2 focus:border-sky-500 h-12"
+                  required
+                />
+              </div>
 
               <Button
                 type="submit"
                 disabled={isLoading}
-                className="w-full h-12 bg-gradient-to-r from-black via-gray-800 to-sky-500 hover:opacity-90 transition-opacity shadow-lg"
+                className="w-full h-12 bg-gradient-to-r from-sky-500 to-blue-500 hover:from-sky-600 hover:to-blue-600 transition-all shadow-lg"
               >
                 {isLoading ? (
                   <div className="flex items-center gap-2">
                     <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                    Logging in...
+                    Creating Account...
                   </div>
                 ) : (
                   <>
-                    <LogIn className="mr-2 h-5 w-5" />
-                    Login to Cheki Events
+                    <UserPlus className="mr-2 h-5 w-5" />
+                    Create Account
                   </>
                 )}
               </Button>
 
               <div className="text-center">
                 <p className="text-sm text-gray-600">
-                  Don't have an account?{" "}
+                  Already have an account?{" "}
                   <button
                     type="button"
-                    onClick={onSwitchToSignUp}
+                    onClick={onSwitchToLogin}
                     className="text-sky-600 hover:text-sky-700 font-medium underline"
                   >
-                    Sign Up
+                    Sign In
                   </button>
                 </p>
               </div>
             </form>
-
-            <div className="mt-6 pt-6 border-t text-center">
-              <p className="text-sm text-muted-foreground">
-                For Riara University Students Only
-              </p>
-            </div>
           </CardContent>
         </Card>
-
-        <motion.div
-          className="mt-6 text-center text-sm text-muted-foreground"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
-        >
-          <p>© 2025 Cheki Events • Riara University</p>
-        </motion.div>
       </motion.div>
     </div>
   );

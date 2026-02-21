@@ -3,6 +3,7 @@ import { Header } from "./components/Header";
 import { FilterBar } from "./components/FilterBar";
 import { EventCard, Event } from "./components/EventCard";
 import { LoginPage } from "./components/LoginPage";
+import { SignUpPage } from "./components/SignUpPage";
 import { motion } from "framer-motion";
 import { CalendarDays } from "lucide-react";
 import { apiService } from "./services/api";
@@ -16,6 +17,7 @@ export default function App() {
   const [categories, setCategories] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isSignUp, setIsSignUp] = useState(false);
 
   // Load events and categories on component mount
   useEffect(() => {
@@ -93,6 +95,21 @@ export default function App() {
     }
   };
 
+  const handleSignUp = async (admissionNumber: string, name: string, email: string, password: string) => {
+    try {
+      const response = await apiService.register(admissionNumber, name, email, password);
+      localStorage.setItem('token', response.token);
+      setUserName(response.user.name);
+      setIsLoggedIn(true);
+      
+      // Load events after successful registration
+      const eventsData = await apiService.getEvents();
+      setEvents(eventsData);
+    } catch (err: any) {
+      throw new Error(err.message || 'Registration failed');
+    }
+  };
+
   const handleLogout = () => {
     localStorage.removeItem('token');
     setIsLoggedIn(false);
@@ -103,7 +120,17 @@ export default function App() {
   };
 
   if (!isLoggedIn) {
-    return <LoginPage onLogin={handleLogin} />;
+    return isSignUp ? (
+      <SignUpPage 
+        onSignUp={handleSignUp} 
+        onSwitchToLogin={() => setIsSignUp(false)} 
+      />
+    ) : (
+      <LoginPage 
+        onLogin={handleLogin} 
+        onSwitchToSignUp={() => setIsSignUp(true)} 
+      />
+    );
   }
 
   if (loading) {
