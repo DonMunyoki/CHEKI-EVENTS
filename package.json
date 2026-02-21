@@ -48,7 +48,6 @@
   },
   "scripts": {
     "dev": "vite",
-    "vite": "vite",
-    "build": "npm run vite -- build"
+    "build": "node ./node_modules/vite/bin/vite.js build"
   }
 }
