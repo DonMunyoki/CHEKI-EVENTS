@@ -1,7 +1,7 @@
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { Search, Filter } from "lucide-react";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 
 interface FilterBarProps {
   searchQuery: string;

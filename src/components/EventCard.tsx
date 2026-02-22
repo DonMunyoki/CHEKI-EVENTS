@@ -3,7 +3,7 @@ import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { Calendar, MapPin, ExternalLink, Ticket } from "lucide-react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 
 export interface Event {
   id: string;

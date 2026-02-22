@@ -1,4 +1,4 @@
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { Logo } from "./Logo";
 import { LogOut, User } from "lucide-react";
 import { Button } from "./ui/button";
