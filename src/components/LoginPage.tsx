@@ -8,7 +8,7 @@ import { Logo } from "./Logo";
 import { UserCircle, Hash, LogIn, Sparkles, Lock } from "lucide-react";
 
 interface LoginPageProps {
-  onLogin: (admissionNumber: string, name: string, password: string) => Promise<void>;
+  onLogin: (admissionNumber: string, password: string) => Promise<void>;
   onSwitchToSignUp: () => void;
 }
 
@@ -47,7 +47,7 @@ export function LoginPage({ onLogin, onSwitchToSignUp }: LoginPageProps) {
     }
 
     try {
-      await onLogin(admissionNumber, name, password);
+      await onLogin(admissionNumber, password);
     } catch (err: any) {
       setError(err.message || "Login failed");
     } finally {
