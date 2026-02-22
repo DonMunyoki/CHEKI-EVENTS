@@ -72,7 +72,7 @@ router.post('/register', async (req, res) => {
 });
 
 // Login user
-router.post('/login', (req, res) => {
+router.post('/login', async (req, res) => {
   const { admission_number, password } = req.body;
 
   if (!admission_number || !password) {
@@ -80,39 +80,34 @@ router.post('/login', (req, res) => {
   }
 
   const query = 'SELECT * FROM users WHERE admission_number = ?';
-  db.get(query, [admission_number], async (err, user) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ error: 'Database error' });
+  const user = db.get(query, [admission_number]);
+
+  if (!user) {
+    return res.status(401).json({ error: 'Invalid credentials' });
+  }
+
+  // Compare password
+  const isMatch = await bcrypt.compare(password, user.password_hash);
+  if (!isMatch) {
+    return res.status(401).json({ error: 'Invalid credentials' });
+  }
+
+  // Create JWT token
+  const token = jwt.sign(
+    { userId: user.id, admission_number: user.admission_number, name: user.name },
+    process.env.JWT_SECRET,
+    { expiresIn: '24h' }
+  );
+
+  res.json({
+    message: 'Login successful',
+    token,
+    user: {
+      id: user.id,
+      admission_number: user.admission_number,
+      name: user.name,
+      email: user.email
     }
-
-    if (!user) {
-      return res.status(401).json({ error: 'Invalid credentials' });
-    }
-
-    // Compare password
-    const isMatch = await bcrypt.compare(password, user.password_hash);
-    if (!isMatch) {
-      return res.status(401).json({ error: 'Invalid credentials' });
-    }
-
-    // Create JWT token
-    const token = jwt.sign(
-      { userId: user.id, admission_number: user.admission_number, name: user.name },
-      process.env.JWT_SECRET,
-      { expiresIn: '24h' }
-    );
-
-    res.json({
-      message: 'Login successful',
-      token,
-      user: {
-        id: user.id,
-        admission_number: user.admission_number,
-        name: user.name,
-        email: user.email
-      }
-    });
   });
 });
 
