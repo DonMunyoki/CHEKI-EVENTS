@@ -74,10 +74,9 @@ router.post('/purchase', verifyToken, (req, res) => {
       const totalPrice = `KES ${(priceNumeric * quantity).toLocaleString()}`;
 
       // Update available tickets
-      db.run(
-        'UPDATE events SET available_tickets = available_tickets - ? WHERE id = ?',
-        [quantity, eventId],
-        function(err) {
+      db.prepare(
+        'UPDATE events SET available_tickets = available_tickets - ? WHERE id = ?'
+      ).run([quantity, eventId], function(err) {
           if (err) {
             console.error(err);
             return res.status(500).json({ error: 'Database error updating tickets' });
@@ -89,7 +88,7 @@ router.post('/purchase', verifyToken, (req, res) => {
             VALUES (?, ?, ?, ?, ?)
           `;
 
-          db.run(insertQuery, [req.user.userId, eventId, ticketNumber, quantity, totalPrice], function(err) {
+          db.prepare(insertQuery).run([req.user.userId, eventId, ticketNumber, quantity, totalPrice], function(err) {
             if (err) {
               console.error(err);
               return res.status(500).json({ error: 'Database error creating ticket' });
@@ -184,21 +183,22 @@ router.delete('/:id', verifyToken, (req, res) => {
 
     db.serialize(() => {
       // Update ticket status
-      db.run('UPDATE tickets SET status = ? WHERE id = ?', ['cancelled', id], function(err) {
-        if (err) {
-          console.error(err);
-          return res.status(500).json({ error: 'Database error updating ticket' });
-        }
+      db.prepare(
+          'UPDATE tickets SET status = ? WHERE id = ?'
+        ).run(['cancelled', id], function(err) {
+          if (err) {
+            console.error(err);
+            return res.status(500).json({ error: 'Database error updating ticket' });
+          }
 
         // Restore available tickets
-        db.run(
-          'UPDATE events SET available_tickets = available_tickets + ? WHERE id = ?',
-          [ticket.quantity, ticket.event_id],
-          function(err) {
-            if (err) {
-              console.error(err);
-              return res.status(500).json({ error: 'Database error restoring tickets' });
-            }
+        db.prepare(
+          'UPDATE events SET available_tickets = available_tickets + ? WHERE id = ?'
+        ).run([ticket.quantity, ticket.event_id], function(err) {
+          if (err) {
+            console.error(err);
+            return res.status(500).json({ error: 'Database error restoring tickets' });
+          }
 
             res.json({ message: 'Ticket cancelled successfully' });
           }

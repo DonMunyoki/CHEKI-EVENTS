@@ -47,7 +47,7 @@ router.put('/profile', verifyToken, (req, res) => {
   query += updates.join(', ') + ' WHERE id = ?';
   params.push(req.user.userId);
 
-  db.run(query, params, function(err) {
+  db.prepare(query).run(params, function(err) {
     if (err) {
       console.error(err);
       return res.status(500).json({ error: 'Database error' });

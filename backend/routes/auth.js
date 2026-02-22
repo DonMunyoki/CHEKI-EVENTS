@@ -40,7 +40,7 @@ router.post('/register', async (req, res) => {
 
       // Insert user
       const query = 'INSERT INTO users (admission_number, name, email, password_hash) VALUES (?, ?, ?, ?)';
-      db.run(query, [admission_number, name, email, password_hash], function(err) {
+      db.prepare(query).run([admission_number, name, email, password_hash], function(err) {
         if (err) {
           console.error(err);
           return res.status(500).json({ error: 'Database error' });
