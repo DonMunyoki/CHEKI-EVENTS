@@ -1,4 +1,4 @@
-const sqlite3 = require('sqlite3').verbose();
+const Database = require('better-sqlite3');
 const path = require('path');
 const fs = require('fs');
 
@@ -10,16 +10,11 @@ if (fs.existsSync(dbPath)) {
   console.log('🗑️  Removed existing database');
 }
 
-const db = new sqlite3.Database(dbPath, (err) => {
-  if (err) {
-    console.error('❌ Error opening database:', err.message);
-    return;
-  }
-  console.log('✅ Connected to SQLite database');
-});
+const db = new Database(dbPath);
+console.log('✅ Connected to SQLite database');
 
 // Create tables
-db.serialize(() => {
+try {
   // Users table
   db.run(`CREATE TABLE users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -29,13 +24,8 @@ db.serialize(() => {
     password_hash TEXT NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
-  )`, (err) => {
-    if (err) {
-      console.error('❌ Error creating users table:', err.message);
-    } else {
-      console.log('✅ Users table created');
-    }
-  });
+  )`);
+  console.log('✅ Users table created');
 
   // Events table
   db.run(`CREATE TABLE events (
@@ -52,13 +42,8 @@ db.serialize(() => {
     available_tickets INTEGER DEFAULT 100,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
-  )`, (err) => {
-    if (err) {
-      console.error('❌ Error creating events table:', err.message);
-    } else {
-      console.log('✅ Events table created');
-    }
-  });
+  )`);
+  console.log('✅ Events table created');
 
   // Tickets table
   db.run(`CREATE TABLE tickets (
@@ -72,15 +57,10 @@ db.serialize(() => {
     purchase_date DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users (id),
     FOREIGN KEY (event_id) REFERENCES events (id)
-  )`, (err) => {
-    if (err) {
-      console.error('❌ Error creating tickets table:', err.message);
-    } else {
-      console.log('✅ Tickets table created');
-    }
-  });
+  )`);
+  console.log('✅ Tickets table created');
 
-  // Insert sample events (from frontend mock data)
+  // Insert sample events
   const sampleEvents = [
     {
       title: "Nairobi Jazz Night",
@@ -152,28 +132,14 @@ db.serialize(() => {
       event.price,
       event.image,
       event.ticket_link
-    ], (err) => {
-      if (err) {
-        console.error('❌ Error inserting event:', err.message);
-      }
-    });
+    ]);
   });
 
-  stmt.finalize((err) => {
-    if (err) {
-      console.error('❌ Error finalizing statement:', err.message);
-    } else {
-      console.log('✅ Sample events inserted');
-    }
-  });
-});
+  console.log('✅ Sample events inserted');
+  console.log('🎉 Database initialization complete!');
 
-// Close database connection
-db.close((err) => {
-  if (err) {
-    console.error('❌ Error closing database:', err.message);
-  } else {
-    console.log('✅ Database connection closed');
-    console.log('🎉 Database initialization complete!');
-  }
-});
+} catch (err) {
+  console.error('❌ Error during database initialization:', err.message);
+} finally {
+  db.close();
+}
