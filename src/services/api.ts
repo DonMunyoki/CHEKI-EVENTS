@@ -64,10 +64,15 @@ class ApiService {
 
     if (!response.ok) {
       const error = await response.json();
+      console.error('Login error:', error);
       throw new Error(error.error || 'Login failed');
     }
 
-    return response.json();
+    const data = await response.json();
+    console.log('Login response:', data);
+    
+    localStorage.setItem('token', data.token);
+    return data;
   }
 
   async register(admission_number: string, name: string, email: string, password: string): Promise<AuthResponse> {
