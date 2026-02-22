@@ -27,7 +27,7 @@ export function LoginPage({ onLogin, onSwitchToSignUp }: LoginPageProps) {
     // Validate admission number format (e.g., 24ZAD108991)
     const admissionPattern = /^\d{2}[A-Z]{3}\d{6}$/;
     if (!admissionPattern.test(admissionNumber)) {
-      setError("Please enter a valid admission number (e.g., 24ZAD108991)");
+      setError("Please enter a valid admission number (e.g., 24ZADXXXXXX)");
       setIsLoading(false);
       return;
     }
@@ -126,7 +126,7 @@ export function LoginPage({ onLogin, onSwitchToSignUp }: LoginPageProps) {
                 <Input
                   id="admissionNumber"
                   type="text"
-                  placeholder="24ZAD108991"
+                  placeholder="Enter your admission number"
                   value={admissionNumber}
                   onChange={(e) => setAdmissionNumber(e.target.value.toUpperCase())}
                   className="border-2 focus:border-sky-500 h-12"
