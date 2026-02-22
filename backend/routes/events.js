@@ -4,35 +4,33 @@ const db = require('../config/database');
 
 // Get all events
 router.get('/', (req, res) => {
-  const { category, search } = req.query;
-  
-  let query = 'SELECT * FROM events';
-  let params = [];
-  
-  if (category && category !== 'All') {
-    query += ' WHERE category = ?';
-    params.push(category);
-  }
-  
-  if (search) {
-    query += category && category !== 'All' 
-      ? ' AND (title LIKE ? OR description LIKE ? OR location LIKE ?)'
-      : ' WHERE (title LIKE ? OR description LIKE ? OR location LIKE ?)';
-    const searchTerm = `%${search}%`;
+  try {
+    const { category, search } = req.query;
+    
+    let query = 'SELECT * FROM events';
+    let params = [];
+    
     if (category && category !== 'All') {
-      params.push(searchTerm, searchTerm, searchTerm);
-    } else {
-      params.push(searchTerm, searchTerm, searchTerm);
+      query += ' WHERE category = ?';
+      params.push(category);
     }
-  }
-  
-  query += ' ORDER BY date ASC';
-  
-  db.all(query, params, (err, rows) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ error: 'Database error' });
+    
+    if (search) {
+      query += category && category !== 'All' 
+        ? ' AND (title LIKE ? OR description LIKE ? OR location LIKE ?)'
+        : ' WHERE (title LIKE ? OR description LIKE ? OR location LIKE ?)';
+      const searchTerm = `%${search}%`;
+      if (category && category !== 'All') {
+        params.push(searchTerm, searchTerm, searchTerm);
+      } else {
+        params.push(searchTerm, searchTerm, searchTerm);
+      }
     }
+    
+    query += ' ORDER BY date ASC';
+    
+    const rows = db.prepare(query).all(params);
+    
     // Transform rows to match frontend Event interface
     const events = rows.map(row => ({
       id: row.id.toString(),
@@ -44,27 +42,28 @@ router.get('/', (req, res) => {
       category: row.category,
       price: row.price,
       image: row.image,
-      ticketLink: row.ticket_link
+      ticketLink: row.ticket_link,
+      availableTickets: row.available_tickets
     }));
-
+    
     res.json(events);
-  });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Database error' });
+  }
 });
 
 // Get single event by ID
 router.get('/:id', (req, res) => {
-  const { id } = req.params;
-  
-  db.get('SELECT * FROM events WHERE id = ?', [id], (err, row) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ error: 'Database error' });
-    }
+  try {
+    const { id } = req.params;
+    
+    const row = db.prepare('SELECT * FROM events WHERE id = ?').get([id]);
     
     if (!row) {
       return res.status(404).json({ error: 'Event not found' });
     }
-
+    
     const event = {
       id: row.id.toString(),
       title: row.title,
@@ -78,22 +77,24 @@ router.get('/:id', (req, res) => {
       ticketLink: row.ticket_link,
       availableTickets: row.available_tickets
     };
-
+    
     res.json(event);
-  });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Database error' });
+  }
 });
 
 // Get all categories
 router.get('/categories/list', (req, res) => {
-  db.all('SELECT DISTINCT category FROM events ORDER BY category', [], (err, rows) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ error: 'Database error' });
-    }
-    
+  try {
+    const rows = db.prepare('SELECT DISTINCT category FROM events ORDER BY category').all();
     const categories = rows.map(row => row.category);
     res.json(categories);
-  });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Database error' });
+  }
 });
 
 // Create new event (admin only)
