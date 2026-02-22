@@ -8,26 +8,31 @@ router.get('/', (req, res) => {
   
   let query = 'SELECT * FROM events';
   let params = [];
-
+  
   if (category && category !== 'All') {
     query += ' WHERE category = ?';
     params.push(category);
   }
-
+  
   if (search) {
-    const searchCondition = params.length > 0 ? ' AND' : ' WHERE';
-    query += `${searchCondition} (title LIKE ? OR description LIKE ? OR location LIKE ?)`;
-    params.push(`%${search}%`, `%${search}%`, `%${search}%`);
+    query += category && category !== 'All' 
+      ? ' AND (title LIKE ? OR description LIKE ? OR location LIKE ?)'
+      : ' WHERE (title LIKE ? OR description LIKE ? OR location LIKE ?)';
+    const searchTerm = `%${search}%`;
+    if (category && category !== 'All') {
+      params.push(searchTerm, searchTerm, searchTerm);
+    } else {
+      params.push(searchTerm, searchTerm, searchTerm);
+    }
   }
-
+  
   query += ' ORDER BY date ASC';
-
+  
   db.all(query, params, (err, rows) => {
     if (err) {
       console.error(err);
       return res.status(500).json({ error: 'Database error' });
     }
-    
     // Transform rows to match frontend Event interface
     const events = rows.map(row => ({
       id: row.id.toString(),
@@ -102,7 +107,7 @@ router.post('/', (req, res) => {
   const query = `INSERT INTO events (title, description, date, time, location, category, price, image, ticket_link) 
                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
-  db.run(query, [title, description, date, time, location, category, price, image, ticket_link], function(err) {
+  db.prepare(query).run([title, description, date, time, location, category, price, image, ticket_link], function(err) {
     if (err) {
       console.error(err);
       return res.status(500).json({ error: 'Database error' });
@@ -151,7 +156,7 @@ router.put('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
   const { id } = req.params;
 
-  db.run('DELETE FROM events WHERE id = ?', [id], function(err) {
+  db.prepare('DELETE FROM events WHERE id = ?').run([id], function(err) {
     if (err) {
       console.error(err);
       return res.status(500).json({ error: 'Database error' });
