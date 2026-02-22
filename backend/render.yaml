@@ -3,7 +3,7 @@ services:
     name: cheki-events-backend
     env: node
     plan: free
-    buildCommand: npm run build && npm install && npm run init-db
+    buildCommand: npm install && npm run init-db
     startCommand: npm start
     healthCheckPath: /api/health
     envVars:
