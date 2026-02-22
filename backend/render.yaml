@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: cheki-events-backend
+    env: node
+    plan: free
+    buildCommand: npm run build && npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3001
+      - key: FRONTEND_URL
+        value: https://cheki-events.vercel.app
+      - key: JWT_SECRET
+        value: your-super-secret-jwt-key-change-this-in-production
+      - key: DB_PATH
+        value: ./database/events.db
