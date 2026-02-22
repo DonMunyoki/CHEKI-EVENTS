@@ -6,6 +6,6 @@ const dbPath = process.env.DB_PATH || path.join(__dirname, '../database/events.d
 const db = new Database(dbPath);
 
 // Enable foreign keys
-db.run('PRAGMA foreign_keys = ON');
+db.exec('PRAGMA foreign_keys = ON');
 
 module.exports = { db, Database };
