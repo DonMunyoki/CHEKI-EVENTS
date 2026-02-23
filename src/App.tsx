@@ -75,23 +75,8 @@ export default function App() {
       const eventsData = await apiService.getEvents();
       setEvents(eventsData);
     } catch (err: any) {
-      // If login fails, try to register the user
-      if (err.message === 'Invalid credentials') {
-        try {
-          const registerResponse = await apiService.register(admissionNumber, name, '', password);
-          localStorage.setItem('token', registerResponse.token);
-          setUserName(registerResponse.user.name);
-          setIsLoggedIn(true);
-          
-          // Load events after successful registration
-          const eventsData = await apiService.getEvents();
-          setEvents(eventsData);
-        } catch (registerErr: any) {
-          throw new Error(registerErr.message || 'Registration failed');
-        }
-      } else {
-        throw err;
-      }
+      // Login failed - show error message
+      throw err;
     }
   };
 
