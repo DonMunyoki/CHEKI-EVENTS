@@ -29,7 +29,7 @@ try {
   const testStmt = db.prepare('SELECT 1');
   if (testStmt) {
     console.log('✅ Database methods working correctly');
-    testStmt.finalize();
+    testStmt.run(); // better-sqlite3 doesn't need finalize()
   }
 } catch (err) {
   console.error('❌ Database methods test failed:', err);
