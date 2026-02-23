@@ -83,18 +83,29 @@ router.post('/register', async (req, res) => {
 // Login user
 router.post('/login', async (req, res) => {
   try {
-    console.log('🔍 Login attempt:', req.body);
+    console.log('🔍 Login attempt received');
+    console.log('🔍 Request headers:', req.headers);
+    console.log('🔍 Request body:', req.body);
+    
     const { admission_number, password } = req.body;
 
     if (!admission_number || !password) {
-      console.log('❌ Missing credentials:', { admission_number: !!admission_number, password: !!password });
-      return res.status(400).json({ error: 'Admission number and password are required' });
+      console.log('❌ Missing credentials:', { 
+        admission_number: !!admission_number, 
+        password: !!password,
+        bodyKeys: Object.keys(req.body)
+      });
+      return res.status(400).json({ 
+        error: 'Admission number and password are required',
+        received: { admission_number, password }
+      });
     }
 
     console.log('🔑 Checking user:', admission_number);
     const query = 'SELECT * FROM users WHERE admission_number = ?';
     const user = db.get(query, [admission_number]);
     
+    console.log('👤 User found:', !!user);
     if (!user) {
       console.log('❌ User not found:', admission_number);
       return res.status(401).json({ error: 'Invalid credentials' });
@@ -102,6 +113,7 @@ router.post('/login', async (req, res) => {
 
     // Compare password
     const isMatch = await bcrypt.compare(password, user.password_hash);
+    console.log('🔐 Password match:', isMatch);
     if (!isMatch) {
       console.log('❌ Password mismatch for:', admission_number);
       return res.status(401).json({ error: 'Invalid credentials' });
@@ -115,7 +127,7 @@ router.post('/login', async (req, res) => {
       { expiresIn: '24h' }
     );
 
-    res.json({
+    const response = {
       message: 'Login successful',
       token,
       user: {
@@ -124,7 +136,10 @@ router.post('/login', async (req, res) => {
         name: user.name,
         email: user.email
       }
-    });
+    };
+    
+    console.log('📤 Sending response:', response);
+    res.json(response);
   } catch (err) {
     console.error('❌ Login route error:', err);
     console.error('❌ Stack trace:', err.stack);

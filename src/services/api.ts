@@ -65,7 +65,8 @@ class ApiService {
     if (!response.ok) {
       const error = await response.json();
       console.error('Login error:', error);
-      throw new Error(error.error || JSON.stringify(error) || 'Login failed');
+      const errorMessage = error.error || error.message || JSON.stringify(error) || 'Login failed';
+      throw new Error(errorMessage);
     }
 
     const data = await response.json();
