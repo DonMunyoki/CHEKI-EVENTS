@@ -5,7 +5,7 @@ import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { Logo } from "./Logo";
-import { UserCircle, Hash, LogIn, Sparkles, Lock } from "lucide-react";
+import { Hash, LogIn, Sparkles, Lock } from "lucide-react";
 
 interface LoginPageProps {
   onLogin: (admissionNumber: string, password: string) => Promise<void>;
