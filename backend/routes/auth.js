@@ -17,6 +17,16 @@ try {
 // Register user
 router.post('/register', async (req, res) => {
   try {
+    console.log('🔍 Registration attempt received');
+    console.log('🔍 Request body:', req.body);
+    console.log('🔍 Database available:', !!db);
+    console.log('🔍 Database type:', typeof db);
+    
+    if (!db) {
+      console.error('❌ Database not available');
+      return res.status(500).json({ error: 'Database not initialized' });
+    }
+
     const { admission_number, email, password } = req.body;
 
     // Validation
@@ -32,20 +42,27 @@ router.post('/register', async (req, res) => {
       return res.status(400).json({ error: 'Password must be at least 6 characters long' });
     }
 
+    console.log('🔍 Checking if user exists...');
     // Check if user already exists
     const existingUser = db.get('SELECT * FROM users WHERE admission_number = ? OR email = ?', [admission_number, email]);
+    console.log('👤 Existing user:', !!existingUser);
+    
     if (existingUser) {
       return res.status(400).json({ error: 'User already exists' });
     }
 
+    console.log('🔐 Hashing password...');
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    console.log('💾 Inserting user...');
     // Insert user
     const insertQuery = 'INSERT INTO users (admission_number, email, password_hash) VALUES (?, ?, ?)';
     const insertStmt = db.prepare(insertQuery);
     const result = insertStmt.run([admission_number, email, hashedPassword]);
+    console.log('✅ User inserted with ID:', result.lastInsertRowid);
 
+    console.log('🔑 Creating JWT token...');
     // Create JWT token
     const token = jwt.sign(
       { userId: result.lastInsertRowid, admission_number },
@@ -53,7 +70,7 @@ router.post('/register', async (req, res) => {
       { expiresIn: '24h' }
     );
 
-    res.status(201).json({
+    const response = {
       message: 'User registered successfully',
       token,
       user: {
@@ -61,10 +78,14 @@ router.post('/register', async (req, res) => {
         admission_number,
         email
       }
-    });
+    };
+    
+    console.log('📤 Sending response:', response);
+    res.status(201).json(response);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Server error' });
+    console.error('❌ Registration error:', error);
+    console.error('❌ Error stack:', error.stack);
+    res.status(500).json({ error: 'Server error', details: error.message });
   }
 });
 
