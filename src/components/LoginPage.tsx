@@ -9,12 +9,10 @@ import { UserCircle, Hash, LogIn, Sparkles, Lock } from "lucide-react";
 
 interface LoginPageProps {
   onLogin: (admissionNumber: string, password: string) => Promise<void>;
-  onSwitchToSignUp: () => void;
 }
 
-export function LoginPage({ onLogin, onSwitchToSignUp }: LoginPageProps) {
+const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
   const [admissionNumber, setAdmissionNumber] = useState("");
-  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -28,13 +26,6 @@ export function LoginPage({ onLogin, onSwitchToSignUp }: LoginPageProps) {
     const admissionPattern = /^\d{2}[A-Z]{3}\d{6}$/;
     if (!admissionPattern.test(admissionNumber)) {
       setError("Please enter a valid admission number (e.g., 24ZADXXXXXX)");
-      setIsLoading(false);
-      return;
-    }
-
-    // Validate name
-    if (name.trim().length < 3) {
-      setError("Please enter your full name");
       setIsLoading(false);
       return;
     }
@@ -135,22 +126,6 @@ export function LoginPage({ onLogin, onSwitchToSignUp }: LoginPageProps) {
                 <p className="text-xs text-muted-foreground">
                   Format: YYCCCNNNNNN (e.g., 24ZAD108991)
                 </p>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="name" className="flex items-center gap-2">
-                  <UserCircle className="h-4 w-4 text-sky-500" />
-                  Full Name
-                </Label>
-                <Input
-                  id="name"
-                  type="text"
-                  placeholder="John Doe"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="border-2 focus:border-sky-500 h-12"
-                  required
-                />
               </div>
 
               <div className="space-y-2">
