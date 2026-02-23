@@ -1,6 +1,4 @@
-const API_BASE_URL = process.env.NODE_ENV === 'production' 
-  ? 'https://cheki-events.onrender.com/api'  // Your live backend URL
-  : 'http://localhost:3001/api';
+const API_BASE_URL = 'https://cheki-events.onrender.com/api';  // Production backend URL
 
 export interface Event {
   id: string;
