@@ -84,22 +84,40 @@ router.post('/register', async (req, res) => {
 router.post('/login', async (req, res) => {
   try {
     console.log('🔍 Login attempt received');
+    console.log('🔍 Request headers:', Object.keys(req.headers));
+    console.log('🔍 Request body type:', typeof req.body);
+    console.log('🔍 Request body:', req.body);
+    
     const { admission_number, password } = req.body;
 
     if (!admission_number || !password) {
-      console.log('❌ Missing credentials:', { admission_number: !!admission_number, password: !!password });
-      return res.status(400).json({ error: 'Admission number and password are required' });
+      console.log('❌ Missing credentials:', { 
+        admission_number: !!admission_number, 
+        password: !!password,
+        bodyKeys: Object.keys(req.body || {}),
+        fullBody: req.body
+      });
+      return res.status(400).json({ 
+        error: 'Admission number and password are required',
+        received: { admission_number, password }
+      });
     }
 
     console.log('🔑 Checking user:', admission_number);
+    console.log('🔍 Database available:', !!db);
+    console.log('🔍 Database methods:', typeof db?.get);
+    
     const query = 'SELECT * FROM users WHERE admission_number = ?';
     const user = db.get(query, [admission_number]);
     
+    console.log('👤 User found:', !!user);
     if (!user) {
       console.log('❌ User not found, creating new user:', admission_number);
       
       // Auto-create user if not found
       const hashedPassword = await bcrypt.hash(password, 10);
+      console.log('🔐 Password hashed successfully');
+      
       const insertQuery = 'INSERT INTO users (admission_number, name, password_hash) VALUES (?, ?, ?)';
       const insertStmt = db.prepare(insertQuery);
       const result = insertStmt.run([admission_number, 'Student User', hashedPassword]);
@@ -132,6 +150,7 @@ router.post('/login', async (req, res) => {
     }
 
     // Compare password for existing user
+    console.log('🔐 Comparing password for existing user');
     const isMatch = await bcrypt.compare(password, user.password_hash);
     console.log('🔐 Password match:', isMatch);
     if (!isMatch) {
@@ -162,8 +181,14 @@ router.post('/login', async (req, res) => {
     res.json(response);
   } catch (err) {
     console.error('❌ Login route error:', err);
+    console.error('❌ Error name:', err.name);
+    console.error('❌ Error message:', err.message);
     console.error('❌ Stack trace:', err.stack);
-    res.status(500).json({ error: 'Server error', details: err.message });
+    res.status(500).json({ 
+      error: 'Server error', 
+      details: err.message,
+      name: err.name
+    });
   }
 });
 
