@@ -87,6 +87,10 @@ router.post('/login', async (req, res) => {
     console.log('🔍 Request headers:', Object.keys(req.headers));
     console.log('🔍 Request body type:', typeof req.body);
     console.log('🔍 Request body:', req.body);
+    console.log('🔍 Environment variables:', {
+      JWT_SECRET: !!process.env.JWT_SECRET,
+      NODE_ENV: process.env.NODE_ENV
+    });
     
     const { admission_number, password } = req.body;
 
@@ -103,10 +107,26 @@ router.post('/login', async (req, res) => {
       });
     }
 
-    console.log('🔑 Checking user:', admission_number);
-    console.log('🔍 Database available:', !!db);
+    console.log('� Database available:', !!db);
     console.log('🔍 Database methods:', typeof db?.get);
     
+    if (!db || typeof db.get !== 'function') {
+      console.error('❌ Database not available');
+      return res.status(500).json({ 
+        error: 'Database not available',
+        details: 'Database connection failed'
+      });
+    }
+
+    if (!process.env.JWT_SECRET) {
+      console.error('❌ JWT_SECRET not set');
+      return res.status(500).json({ 
+        error: 'Server configuration error',
+        details: 'JWT_SECRET not set'
+      });
+    }
+    
+    console.log('🔑 Checking user:', admission_number);
     const query = 'SELECT * FROM users WHERE admission_number = ?';
     const user = db.get(query, [admission_number]);
     
@@ -184,10 +204,12 @@ router.post('/login', async (req, res) => {
     console.error('❌ Error name:', err.name);
     console.error('❌ Error message:', err.message);
     console.error('❌ Stack trace:', err.stack);
+    console.error('❌ Full error object:', JSON.stringify(err, null, 2));
     res.status(500).json({ 
       error: 'Server error', 
       details: err.message,
-      name: err.name
+      name: err.name,
+      stack: err.stack
     });
   }
 });
