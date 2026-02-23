@@ -16,7 +16,7 @@ const PORT = process.env.PORT || 3001;
 // Security middleware
 app.use(helmet());
 app.use(cors({
-  origin: ['https://cheki-events.vercel.app', 'https://cheki-events-eskt.vercel.app', 'http://localhost:3000', 'http://localhost:5173'],
+  origin: ['https://cheki-events.vercel.app', 'https://cheki-events-eskt.vercel.app', 'http://localhost:3000', 'http://localhost:5173', 'http://localhost:3001'],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
