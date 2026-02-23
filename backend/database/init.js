@@ -15,16 +15,17 @@ console.log('✅ Connected to SQLite database');
 
 // Create tables
 try {
-  // Users table
-  db.exec(`CREATE TABLE users (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    admission_number TEXT UNIQUE NOT NULL,
-    name TEXT NOT NULL,
-    email TEXT UNIQUE,
-    password_hash TEXT NOT NULL,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
-  )`);
+  // Create users table
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS users (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      admission_number TEXT UNIQUE NOT NULL,
+      email TEXT UNIQUE NOT NULL,
+      password_hash TEXT NOT NULL,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    )
+  `);
   console.log('✅ Users table created');
 
   // Events table

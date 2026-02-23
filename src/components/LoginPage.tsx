@@ -23,15 +23,12 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin, onSwitchToSignUp }) => {
     setError("");
     setIsLoading(true);
 
-    // Validate admission number format (e.g., 24ZAD108991)
-    const admissionPattern = /^\d{2}[A-Z]{3}\d{6}$/;
-    if (!admissionPattern.test(admissionNumber)) {
-      setError("Please enter a valid admission number (e.g., 24ZADXXXXXX)");
+    if (admissionNumber.length < 10) {
+      setError("Admission number must be at least 10 characters");
       setIsLoading(false);
       return;
     }
 
-    // Validate password
     if (password.length < 6) {
       setError("Password must be at least 6 characters long");
       setIsLoading(false);
@@ -41,7 +38,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin, onSwitchToSignUp }) => {
     try {
       await onLogin(admissionNumber, password);
     } catch (err: any) {
-      setError(err.message || "Login failed");
+      setError(err.message || "Login failed. Please try again.");
     } finally {
       setIsLoading(false);
     }

@@ -17,8 +17,7 @@ export interface Event {
 export interface User {
   id: number;
   admission_number: string;
-  name: string;
-  email?: string;
+  email: string;
   created_at: string;
 }
 
@@ -74,11 +73,11 @@ class ApiService {
     return data;
   }
 
-  async register(admission_number: string, name: string, email: string, password: string): Promise<AuthResponse> {
+  async register(admission_number: string, email: string, password: string): Promise<AuthResponse> {
     const response = await fetch(`${API_BASE_URL}/auth/register`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ admission_number, name, email, password }),
+      body: JSON.stringify({ admission_number, email, password }),
     });
 
     if (!response.ok) {

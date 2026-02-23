@@ -68,7 +68,7 @@ export default function App() {
       // First try to login
       const response = await apiService.login(admissionNumber, password);
       localStorage.setItem('token', response.token);
-      setUserName(response.user.name);
+      setUserName(response.user.email);
       setIsLoggedIn(true);
       
       // Load events after successful login
@@ -80,11 +80,11 @@ export default function App() {
     }
   };
 
-  const handleSignUp = async (admissionNumber: string, name: string, email: string, password: string) => {
+  const handleSignUp = async (admissionNumber: string, email: string, password: string) => {
     try {
-      const response = await apiService.register(admissionNumber, name, email, password);
+      const response = await apiService.register(admissionNumber, email, password);
       localStorage.setItem('token', response.token);
-      setUserName(response.user.name);
+      setUserName(response.user.email);
       setIsLoggedIn(true);
       
       // Load events after successful registration

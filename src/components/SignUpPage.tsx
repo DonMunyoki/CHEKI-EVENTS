@@ -8,13 +8,12 @@ import { Logo } from "./Logo";
 import { UserCircle, Hash, UserPlus, Sparkles, Lock, Mail } from "lucide-react";
 
 interface SignUpPageProps {
-  onSignUp: (admissionNumber: string, name: string, email: string, password: string) => Promise<void>;
+  onSignUp: (admissionNumber: string, email: string, password: string) => Promise<void>;
   onSwitchToLogin: () => void;
 }
 
 export function SignUpPage({ onSignUp, onSwitchToLogin }: SignUpPageProps) {
   const [admissionNumber, setAdmissionNumber] = useState("");
-  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -34,16 +33,8 @@ export function SignUpPage({ onSignUp, onSwitchToLogin }: SignUpPageProps) {
       return;
     }
 
-    // Validate name
-    if (name.trim().length < 3) {
-      setError("Please enter your full name");
-      setIsLoading(false);
-      return;
-    }
-
     // Validate email
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailPattern.test(email)) {
+    if (!email.trim() || !email.includes('@')) {
       setError("Please enter a valid email address");
       setIsLoading(false);
       return;
@@ -64,9 +55,9 @@ export function SignUpPage({ onSignUp, onSwitchToLogin }: SignUpPageProps) {
     }
 
     try {
-      await onSignUp(admissionNumber, name, email, password);
+      await onSignUp(admissionNumber, email, password);
     } catch (err: any) {
-      setError(err.message || "Registration failed");
+      setError(err.message || "Registration failed. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -126,22 +117,6 @@ export function SignUpPage({ onSignUp, onSwitchToLogin }: SignUpPageProps) {
                 <p className="text-xs text-muted-foreground">
                   Format: YYXXX123456 (e.g., 24ZAD108991)
                 </p>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="name" className="flex items-center gap-2">
-                  <UserCircle className="h-4 w-4 text-sky-500" />
-                  Full Name
-                </Label>
-                <Input
-                  id="name"
-                  type="text"
-                  placeholder="Enter your full name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="border-2 focus:border-sky-500 h-12"
-                  required
-                />
               </div>
 
               <div className="space-y-2">
