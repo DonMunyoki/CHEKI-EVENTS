@@ -1,10 +1,18 @@
 const Database = require('better-sqlite3');
 const path = require('path');
+const fs = require('fs');
 
 // Use persistent storage for Render
 const dbPath = process.env.NODE_ENV === 'production' 
   ? '/opt/render/project/src/database/events.db'
   : path.join(__dirname, '../database/events.db');
+
+// Ensure database directory exists
+const dbDir = path.dirname(dbPath);
+if (!fs.existsSync(dbDir)) {
+  console.log('📁 Creating database directory:', dbDir);
+  fs.mkdirSync(dbDir, { recursive: true });
+}
 
 console.log('🗄️ Database path:', dbPath);
 
