@@ -2,7 +2,7 @@ import { useState, useMemo, useEffect } from "react";
 import { Header } from "./components/Header";
 import { FilterBar } from "./components/FilterBar";
 import { EventCard, Event } from "./components/EventCard";
-import { LoginPage } from "./components/LoginPage";
+import LoginPage from "./components/LoginPage";
 import { SignUpPage } from "./components/SignUpPage";
 import { motion } from "framer-motion";
 import { CalendarDays } from "lucide-react";
@@ -63,7 +63,7 @@ export default function App() {
     }
   }, [searchQuery, selectedCategory, isLoggedIn]);
 
-  const handleLogin = async (admissionNumber: string, name: string, password: string) => {
+  const handleLogin = async (admissionNumber: string, password: string) => {
     try {
       // First try to login
       const response = await apiService.login(admissionNumber, password);

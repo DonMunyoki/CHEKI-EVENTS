@@ -9,9 +9,10 @@ import { UserCircle, Hash, LogIn, Sparkles, Lock } from "lucide-react";
 
 interface LoginPageProps {
   onLogin: (admissionNumber: string, password: string) => Promise<void>;
+  onSwitchToSignUp?: () => void;
 }
 
-const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
+const LoginPage: React.FC<LoginPageProps> = ({ onLogin, onSwitchToSignUp }) => {
   const [admissionNumber, setAdmissionNumber] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -208,4 +209,6 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
       </motion.div>
     </div>
   );
-}
+};
+
+export default LoginPage;
