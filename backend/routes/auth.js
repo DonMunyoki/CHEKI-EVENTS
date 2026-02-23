@@ -73,42 +73,54 @@ router.post('/register', async (req, res) => {
 
 // Login user
 router.post('/login', async (req, res) => {
-  const { admission_number, password } = req.body;
+  try {
+    console.log('🔍 Login attempt:', req.body);
+    const { admission_number, password } = req.body;
 
-  if (!admission_number || !password) {
-    return res.status(400).json({ error: 'Admission number and password are required' });
-  }
-
-  const query = 'SELECT * FROM users WHERE admission_number = ?';
-  const user = db.get(query, [admission_number]);
-
-  if (!user) {
-    return res.status(401).json({ error: 'Invalid credentials' });
-  }
-
-  // Compare password
-  const isMatch = await bcrypt.compare(password, user.password_hash);
-  if (!isMatch) {
-    return res.status(401).json({ error: 'Invalid credentials' });
-  }
-
-  // Create JWT token
-  const token = jwt.sign(
-    { userId: user.id, admission_number: user.admission_number, name: user.name },
-    process.env.JWT_SECRET,
-    { expiresIn: '24h' }
-  );
-
-  res.json({
-    message: 'Login successful',
-    token,
-    user: {
-      id: user.id,
-      admission_number: user.admission_number,
-      name: user.name,
-      email: user.email
+    if (!admission_number || !password) {
+      console.log('❌ Missing credentials:', { admission_number: !!admission_number, password: !!password });
+      return res.status(400).json({ error: 'Admission number and password are required' });
     }
-  });
+
+    console.log('🔑 Checking user:', admission_number);
+    const query = 'SELECT * FROM users WHERE admission_number = ?';
+    const user = db.get(query, [admission_number]);
+    
+    if (!user) {
+      console.log('❌ User not found:', admission_number);
+      return res.status(401).json({ error: 'Invalid credentials' });
+    }
+
+    // Compare password
+    const isMatch = await bcrypt.compare(password, user.password_hash);
+    if (!isMatch) {
+      console.log('❌ Password mismatch for:', admission_number);
+      return res.status(401).json({ error: 'Invalid credentials' });
+    }
+
+    console.log('✅ Login successful for:', admission_number);
+    // Create JWT token
+    const token = jwt.sign(
+      { userId: user.id, admission_number: user.admission_number, name: user.name },
+      process.env.JWT_SECRET,
+      { expiresIn: '24h' }
+    );
+
+    res.json({
+      message: 'Login successful',
+      token,
+      user: {
+        id: user.id,
+        admission_number: user.admission_number,
+        name: user.name,
+        email: user.email
+      }
+    });
+  } catch (err) {
+    console.error('❌ Login route error:', err);
+    console.error('❌ Stack trace:', err.stack);
+    res.status(500).json({ error: 'Server error', details: err.message });
+  }
 });
 
 // Verify token middleware

@@ -6,6 +6,13 @@ const db = require('../config/database');
 router.get('/', (req, res) => {
   try {
     console.log('🔍 Fetching events with query:', req.query);
+    
+    // Check if database is available
+    if (!db || typeof db.prepare !== 'function') {
+      console.error('❌ Database not properly initialized');
+      return res.status(500).json({ error: 'Database not available' });
+    }
+    
     const { category, search } = req.query;
     
     let query = 'SELECT * FROM events';
@@ -32,7 +39,13 @@ router.get('/', (req, res) => {
     console.log('📝 Final query:', query);
     console.log('📝 Parameters:', params);
     
-    const rows = db.prepare(query).all(params);
+    const stmt = db.prepare(query);
+    if (!stmt) {
+      console.error('❌ Failed to prepare statement');
+      return res.status(500).json({ error: 'Database query preparation failed' });
+    }
+    
+    const rows = stmt.all(params);
     console.log('📊 Found events:', rows.length);
     
     // Transform rows to match frontend Event interface
@@ -95,7 +108,20 @@ router.get('/:id', (req, res) => {
 router.get('/categories/list', (req, res) => {
   try {
     console.log('🔍 Fetching categories');
-    const rows = db.prepare('SELECT DISTINCT category FROM events ORDER BY category').all();
+    
+    // Check if database is available
+    if (!db || typeof db.prepare !== 'function') {
+      console.error('❌ Database not properly initialized');
+      return res.status(500).json({ error: 'Database not available' });
+    }
+    
+    const stmt = db.prepare('SELECT DISTINCT category FROM events ORDER BY category');
+    if (!stmt) {
+      console.error('❌ Failed to prepare categories statement');
+      return res.status(500).json({ error: 'Database query preparation failed' });
+    }
+    
+    const rows = stmt.all();
     console.log('📊 Found categories:', rows.length);
     const categories = rows.map(row => row.category);
     console.log('✅ Categories:', categories);
