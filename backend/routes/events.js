@@ -5,6 +5,7 @@ const db = require('../config/database');
 // Get all events
 router.get('/', (req, res) => {
   try {
+    console.log('🔍 Fetching events with query:', req.query);
     const { category, search } = req.query;
     
     let query = 'SELECT * FROM events';
@@ -28,8 +29,11 @@ router.get('/', (req, res) => {
     }
     
     query += ' ORDER BY date ASC';
+    console.log('📝 Final query:', query);
+    console.log('📝 Parameters:', params);
     
     const rows = db.prepare(query).all(params);
+    console.log('📊 Found events:', rows.length);
     
     // Transform rows to match frontend Event interface
     const events = rows.map(row => ({
@@ -46,10 +50,12 @@ router.get('/', (req, res) => {
       availableTickets: row.available_tickets
     }));
     
+    console.log('✅ Sending events to frontend');
     res.json(events);
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Database error' });
+    console.error('❌ Events route error:', err);
+    console.error('❌ Stack trace:', err.stack);
+    res.status(500).json({ error: 'Database error', details: err.message });
   }
 });
 
@@ -88,12 +94,16 @@ router.get('/:id', (req, res) => {
 // Get all categories
 router.get('/categories/list', (req, res) => {
   try {
+    console.log('🔍 Fetching categories');
     const rows = db.prepare('SELECT DISTINCT category FROM events ORDER BY category').all();
+    console.log('📊 Found categories:', rows.length);
     const categories = rows.map(row => row.category);
+    console.log('✅ Categories:', categories);
     res.json(categories);
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Database error' });
+    console.error('❌ Categories route error:', err);
+    console.error('❌ Stack trace:', err.stack);
+    res.status(500).json({ error: 'Database error', details: err.message });
   }
 });
 
