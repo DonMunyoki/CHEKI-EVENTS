@@ -1,9 +1,18 @@
 const express = require('express');
+const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const validator = require('validator');
-const router = express.Router();
-const db = require('../config/database');
+
+// Import database with fallback
+let db;
+try {
+  db = require('../config/database').db;
+  console.log(' Auth: Database imported successfully');
+} catch (err) {
+  console.error(' Auth: Failed to import database:', err);
+  db = null;
+}
 
 // Register new user
 router.post('/register', async (req, res) => {

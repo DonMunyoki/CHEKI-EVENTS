@@ -1,6 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../config/database');
+
+// Import database with fallback
+let db;
+try {
+  db = require('../config/database').db;
+  console.log('🔍 Database imported successfully');
+} catch (err) {
+  console.error('❌ Failed to import database:', err);
+  db = null;
+}
 
 // Get all events
 router.get('/', (req, res) => {
