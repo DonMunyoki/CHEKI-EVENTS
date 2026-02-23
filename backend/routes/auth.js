@@ -84,34 +84,54 @@ router.post('/register', async (req, res) => {
 router.post('/login', async (req, res) => {
   try {
     console.log('🔍 Login attempt received');
-    console.log('🔍 Request headers:', req.headers);
-    console.log('🔍 Request body:', req.body);
-    
     const { admission_number, password } = req.body;
 
     if (!admission_number || !password) {
-      console.log('❌ Missing credentials:', { 
-        admission_number: !!admission_number, 
-        password: !!password,
-        bodyKeys: Object.keys(req.body)
-      });
-      return res.status(400).json({ 
-        error: 'Admission number and password are required',
-        received: { admission_number, password }
-      });
+      console.log('❌ Missing credentials:', { admission_number: !!admission_number, password: !!password });
+      return res.status(400).json({ error: 'Admission number and password are required' });
     }
 
     console.log('🔑 Checking user:', admission_number);
     const query = 'SELECT * FROM users WHERE admission_number = ?';
     const user = db.get(query, [admission_number]);
     
-    console.log('👤 User found:', !!user);
     if (!user) {
-      console.log('❌ User not found:', admission_number);
-      return res.status(401).json({ error: 'Invalid credentials' });
+      console.log('❌ User not found, creating new user:', admission_number);
+      
+      // Auto-create user if not found
+      const hashedPassword = await bcrypt.hash(password, 10);
+      const insertQuery = 'INSERT INTO users (admission_number, name, password_hash) VALUES (?, ?, ?)';
+      const insertStmt = db.prepare(insertQuery);
+      const result = insertStmt.run([admission_number, 'Student User', hashedPassword]);
+      
+      console.log('✅ New user created with ID:', result.lastInsertRowid);
+      
+      // Get the newly created user
+      const newUser = db.get(query, [admission_number]);
+      
+      // Create JWT token for new user
+      const token = jwt.sign(
+        { userId: newUser.id, admission_number: newUser.admission_number, name: newUser.name },
+        process.env.JWT_SECRET,
+        { expiresIn: '24h' }
+      );
+
+      const response = {
+        message: 'User created and logged in successfully',
+        token,
+        user: {
+          id: newUser.id,
+          admission_number: newUser.admission_number,
+          name: newUser.name,
+          email: newUser.email
+        }
+      };
+      
+      console.log('📤 Sending response for new user:', response);
+      return res.json(response);
     }
 
-    // Compare password
+    // Compare password for existing user
     const isMatch = await bcrypt.compare(password, user.password_hash);
     console.log('🔐 Password match:', isMatch);
     if (!isMatch) {
