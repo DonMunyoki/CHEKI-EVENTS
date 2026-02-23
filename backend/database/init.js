@@ -16,7 +16,7 @@ console.log('✅ Connected to SQLite database');
 // Create tables
 try {
   // Users table
-  db.run(`CREATE TABLE users (
+  db.exec(`CREATE TABLE users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     admission_number TEXT UNIQUE NOT NULL,
     name TEXT NOT NULL,
@@ -28,7 +28,7 @@ try {
   console.log('✅ Users table created');
 
   // Events table
-  db.run(`CREATE TABLE events (
+  db.exec(`CREATE TABLE events (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     title TEXT NOT NULL,
     description TEXT NOT NULL,
@@ -46,7 +46,7 @@ try {
   console.log('✅ Events table created');
 
   // Tickets table
-  db.run(`CREATE TABLE tickets (
+  db.exec(`CREATE TABLE tickets (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER NOT NULL,
     event_id INTEGER NOT NULL,
