@@ -33,13 +33,42 @@ app.use(limiter);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Routes
+// Health check endpoint
+app.get('/health', (req, res) => {
+  try {
+    console.log('🏥 Health check requested');
+    console.log('🔍 Database available:', !!db);
+    console.log('🔍 JWT_SECRET available:', !!process.env.JWT_SECRET);
+    console.log('🔍 Environment:', process.env.NODE_ENV);
+    
+    // Test database connection
+    if (db) {
+      const testQuery = db.prepare('SELECT 1 as test');
+      const result = testQuery.get();
+      console.log('✅ Database test successful:', !!result);
+    }
+    
+    res.json({
+      status: 'healthy',
+      database: !!db,
+      jwt_secret: !!process.env.JWT_SECRET,
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    console.error('❌ Health check error:', error);
+    res.status(500).json({
+      status: 'unhealthy',
+      error: error.message
+    });
+  }
+});
+
+// API routes
 app.use('/api/events', eventRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/tickets', ticketRoutes);
 app.use('/api/auth', authRoutes);
 
-// Health check endpoint
 app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', timestamp: new Date().toISOString() });
 });

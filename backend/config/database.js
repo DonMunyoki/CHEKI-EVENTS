@@ -1,28 +1,18 @@
 const Database = require('better-sqlite3');
 const path = require('path');
 
-const dbPath = process.env.DB_PATH || path.join(__dirname, '../database/events.db');
+// Use persistent storage for Render
+const dbPath = process.env.NODE_ENV === 'production' 
+  ? '/opt/render/project/src/database/events.db'
+  : path.join(__dirname, '../database/events.db');
 
 console.log('🗄️ Database path:', dbPath);
 
-let db;
-try {
-  db = new Database(dbPath);
-  console.log('✅ Database connected successfully');
-  console.log('🔍 Database methods available:', Object.getOwnPropertyNames(db));
-  console.log('🔍 db.prepare type:', typeof db.prepare);
-} catch (err) {
-  console.error('❌ Database connection error:', err);
-  process.exit(1);
-}
+const db = new Database(dbPath);
 
 // Enable foreign keys
-try {
-  db.exec('PRAGMA foreign_keys = ON');
-  console.log('✅ Foreign keys enabled');
-} catch (err) {
-  console.error('❌ Error enabling foreign keys:', err);
-}
+db.pragma('journal_mode = WAL');
+db.pragma('foreign_keys = ON');
 
 // Test database methods
 try {
@@ -35,4 +25,4 @@ try {
   console.error('❌ Database methods test failed:', err);
 }
 
-module.exports = { db, Database };
+module.exports = { db };
