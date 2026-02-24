@@ -2,21 +2,41 @@ const Database = require('better-sqlite3');
 const path = require('path');
 const fs = require('fs');
 
-// Use persistent storage for Render
+// Use /tmp directory for Render (always available)
 const dbPath = process.env.NODE_ENV === 'production' 
-  ? '/opt/render/project/src/database/events.db'
+  ? '/tmp/events.db'
   : path.join(__dirname, '../database/events.db');
 
 // Ensure database directory exists
 const dbDir = path.dirname(dbPath);
 if (!fs.existsSync(dbDir)) {
   console.log('📁 Creating database directory:', dbDir);
-  fs.mkdirSync(dbDir, { recursive: true });
+  try {
+    fs.mkdirSync(dbDir, { recursive: true });
+  } catch (err) {
+    console.error('❌ Failed to create directory:', err);
+  }
 }
 
 console.log('🗄️ Database path:', dbPath);
 
-const db = new Database(dbPath);
+let db;
+try {
+  db = new Database(dbPath);
+  console.log('✅ Database created successfully');
+} catch (err) {
+  console.error('❌ Failed to create database:', err);
+  // Try fallback to /tmp
+  try {
+    const fallbackPath = '/tmp/events.db';
+    console.log('🔄 Trying fallback path:', fallbackPath);
+    db = new Database(fallbackPath);
+    console.log('✅ Database created with fallback path');
+  } catch (fallbackErr) {
+    console.error('❌ Fallback also failed:', fallbackErr);
+    throw fallbackErr;
+  }
+}
 
 // Enable foreign keys
 db.pragma('journal_mode = WAL');
