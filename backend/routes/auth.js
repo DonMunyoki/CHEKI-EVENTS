@@ -11,7 +11,29 @@ try {
   console.log(' Auth: Database imported successfully');
 } catch (err) {
   console.error(' Auth: Failed to import database:', err);
-  db = null;
+  // Try to create database directly
+  try {
+    const Database = require('better-sqlite3');
+    const path = require('path');
+    const fs = require('fs');
+    
+    const dbPath = process.env.NODE_ENV === 'production' 
+      ? '/opt/render/project/src/database/events.db'
+      : path.join(__dirname, '../database/events.db');
+    
+    // Ensure database directory exists
+    const dbDir = path.dirname(dbPath);
+    if (!fs.existsSync(dbDir)) {
+      console.log('📁 Creating database directory:', dbDir);
+      fs.mkdirSync(dbDir, { recursive: true });
+    }
+    
+    db = new Database(dbPath);
+    console.log(' Auth: Database created directly');
+  } catch (directErr) {
+    console.error(' Auth: Failed to create database directly:', directErr);
+    db = null;
+  }
 }
 
 // Register user
