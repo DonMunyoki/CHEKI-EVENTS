@@ -3,37 +3,30 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const validator = require('validator');
+const Database = require('better-sqlite3');
 
-// Import database with fallback
+// Create in-memory database directly in routes
 let db;
 try {
-  db = require('../config/database').db;
-  console.log(' Auth: Database imported successfully');
+  db = new Database(':memory:');
+  console.log(' Auth: In-memory database created successfully');
+  
+  // Initialize tables
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS users (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      admission_number TEXT UNIQUE NOT NULL,
+      email TEXT UNIQUE NOT NULL,
+      password_hash TEXT NOT NULL,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    );
+  `);
+  
+  console.log(' Auth: Users table created in memory');
 } catch (err) {
-  console.error(' Auth: Failed to import database:', err);
-  // Try to create database directly
-  try {
-    const Database = require('better-sqlite3');
-    const path = require('path');
-    const fs = require('fs');
-    
-    const dbPath = process.env.NODE_ENV === 'production' 
-      ? '/opt/render/project/src/database/events.db'
-      : path.join(__dirname, '../database/events.db');
-    
-    // Ensure database directory exists
-    const dbDir = path.dirname(dbPath);
-    if (!fs.existsSync(dbDir)) {
-      console.log('📁 Creating database directory:', dbDir);
-      fs.mkdirSync(dbDir, { recursive: true });
-    }
-    
-    db = new Database(dbPath);
-    console.log(' Auth: Database created directly');
-  } catch (directErr) {
-    console.error(' Auth: Failed to create database directly:', directErr);
-    db = null;
-  }
+  console.error(' Auth: Failed to create in-memory database:', err);
+  db = null;
 }
 
 // Register user
