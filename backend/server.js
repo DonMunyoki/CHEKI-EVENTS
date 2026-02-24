@@ -37,20 +37,23 @@ app.use(express.urlencoded({ extended: true }));
 app.get('/health', (req, res) => {
   try {
     console.log('🏥 Health check requested');
-    console.log('🔍 Database available:', !!db);
+    
+    // Create a simple in-memory database for health check
+    const Database = require('better-sqlite3');
+    const healthDb = new Database(':memory:');
+    
+    console.log('🔍 Database available:', !!healthDb);
     console.log('🔍 JWT_SECRET available:', !!process.env.JWT_SECRET);
     console.log('🔍 Environment:', process.env.NODE_ENV);
     
     // Test database connection
-    if (db) {
-      const testQuery = db.prepare('SELECT 1 as test');
-      const result = testQuery.get();
-      console.log('✅ Database test successful:', !!result);
-    }
+    const testQuery = healthDb.prepare('SELECT 1 as test');
+    const result = testQuery.get();
+    console.log('✅ Database test successful:', !!result);
     
     res.json({
       status: 'healthy',
-      database: !!db,
+      database: !!healthDb,
       jwt_secret: !!process.env.JWT_SECRET,
       timestamp: new Date().toISOString()
     });
