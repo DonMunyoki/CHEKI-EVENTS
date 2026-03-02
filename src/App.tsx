@@ -170,30 +170,23 @@ export default function App() {
 
   if (loading && !selectedCategory) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-600 via-pink-600 to-blue-600 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-500 flex items-center justify-center">
         <div className="text-center">
           <motion.div
             animate={{ rotate: 360 }}
             transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-            className="w-20 h-20 mx-auto mb-8"
+            className="w-16 h-16 mx-auto mb-6"
           >
-            <div className="w-full h-full bg-gradient-to-r from-yellow-400 to-pink-500 rounded-full flex items-center justify-center shadow-2xl">
-              <Sparkles className="h-10 w-10 text-white" />
+            <div className="w-full h-full bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center">
+              <Sparkles className="h-8 w-8 text-white" />
             </div>
           </motion.div>
-          <motion.h1
-            animate={{ scale: [1, 1.1, 1] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className="text-4xl font-bold text-white mb-4"
-          >
-            Welcome to CHEKI EVENTS
-          </motion.h1>
           <motion.p
             animate={{ opacity: [0.5, 1, 0.5] }}
             transition={{ duration: 2, repeat: Infinity }}
-            className="text-white text-xl font-medium"
+            className="text-white text-lg font-medium"
           >
-            Discover Amazing Events in Nairobi
+            Loading categories...
           </motion.p>
         </div>
       </div>
@@ -202,14 +195,14 @@ export default function App() {
 
   if (error && !selectedCategory) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-600 via-pink-600 to-blue-600 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-500 flex items-center justify-center">
         <div className="text-center">
-          <Sparkles className="h-20 w-20 text-red-400 mx-auto mb-8" />
-          <h2 className="text-4xl font-bold text-white mb-6">Oops!</h2>
-          <p className="text-white text-xl mb-8">{error}</p>
+          <Sparkles className="h-16 w-16 text-red-400 mx-auto mb-6" />
+          <h2 className="text-3xl font-bold text-white mb-4">Oops!</h2>
+          <p className="text-gray-200 mb-6">{error}</p>
           <button 
             onClick={() => window.location.reload()}
-            className="px-8 py-4 bg-gradient-to-r from-yellow-400 to-pink-500 text-white rounded-full text-lg font-bold hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
+            className="px-6 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:shadow-lg transition-all duration-300"
           >
             Try Again
           </button>
@@ -221,7 +214,7 @@ export default function App() {
   // Category Menu View
   if (!selectedCategory) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-600 via-pink-600 to-blue-600 flex flex-col">
+      <div className="min-h-screen bg-gray-500 flex flex-col">
         <Header userName="Guest" onLogout={() => {}} />
         
         {/* Colorful Top Navigation Bar */}
@@ -258,57 +251,6 @@ export default function App() {
         </motion.div>
         
         <div className="flex-1 container mx-auto px-4 py-8 pt-24">
-          {/* Welcome Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
-          >
-            <motion.h1 
-              animate={{ scale: [1, 1.05, 1] }}
-              transition={{ duration: 3, repeat: Infinity }}
-              className="text-6xl font-bold text-white mb-6 drop-shadow-2xl"
-            >
-              🎉 Welcome to CHEKI EVENTS 🎉
-            </motion.h1>
-            <motion.p 
-              animate={{ opacity: [0.8, 1, 0.8] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="text-2xl text-white mb-8 drop-shadow-lg"
-            >
-              Discover Amazing Events in Nairobi - Your Gateway to Entertainment!
-            </motion.p>
-            
-            {/* Stats */}
-            <div className="flex justify-center gap-8 mb-12">
-              <motion.div
-                animate={{ scale: [1, 1.1, 1] }}
-                transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
-                className="text-center"
-              >
-                <div className="text-4xl font-bold text-yellow-400">30+</div>
-                <div className="text-white font-medium">Events</div>
-              </motion.div>
-              <motion.div
-                animate={{ scale: [1, 1.1, 1] }}
-                transition={{ duration: 2, repeat: Infinity, delay: 1 }}
-                className="text-center"
-              >
-                <div className="text-4xl font-bold text-pink-400">13</div>
-                <div className="text-white font-medium">Categories</div>
-              </motion.div>
-              <motion.div
-                animate={{ scale: [1, 1.1, 1] }}
-                transition={{ duration: 2, repeat: Infinity, delay: 1.5 }}
-                className="text-center"
-              >
-                <div className="text-4xl font-bold text-cyan-400">24/7</div>
-                <div className="text-white font-medium">Access</div>
-              </motion.div>
-            </div>
-          </motion.div>
-
           {/* Category Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             {categories.map((category, index) => (
@@ -386,7 +328,7 @@ export default function App() {
 
   // Events View for Selected Category
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-600 via-pink-600 to-blue-600 flex flex-col">
+    <div className="min-h-screen bg-gray-500 flex flex-col">
       <Header userName="Guest" onLogout={() => {}} />
       
       {/* Colorful Top Navigation Bar */}
@@ -475,18 +417,18 @@ export default function App() {
             <motion.div
               animate={{ rotate: 360 }}
               transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-              className="w-20 h-20 mx-auto mb-8"
+              className="w-16 h-16 mx-auto mb-6"
             >
-              <div className="w-full h-full bg-gradient-to-r from-yellow-400 to-pink-500 rounded-full flex items-center justify-center shadow-2xl">
-                <Sparkles className="h-10 w-10 text-white" />
+              <div className="w-full h-full bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center">
+                <Sparkles className="h-8 w-8 text-white" />
               </div>
             </motion.div>
             <motion.p
               animate={{ opacity: [0.5, 1, 0.5] }}
               transition={{ duration: 2, repeat: Infinity }}
-              className="text-white text-xl font-medium"
+              className="text-white text-lg font-medium"
             >
-              Loading amazing events...
+              Loading events...
             </motion.p>
           </div>
         ) : events.length === 0 ? (
@@ -495,9 +437,9 @@ export default function App() {
             animate={{ opacity: 1 }}
             className="text-center py-20"
           >
-            <Sparkles className="h-20 w-20 text-yellow-400 mx-auto mb-8" />
-            <h3 className="text-3xl font-bold text-white mb-6">No events found</h3>
-            <p className="text-xl text-white">Try adjusting your search</p>
+            <Sparkles className="h-16 w-16 text-gray-400 mx-auto mb-6" />
+            <h3 className="text-2xl font-bold text-white mb-4">No events found</h3>
+            <p className="text-gray-200">Try adjusting your search</p>
           </motion.div>
         ) : (
           <motion.div
