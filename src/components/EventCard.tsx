@@ -147,13 +147,6 @@ const ImageWithFallback: React.FC<{ src: string; alt: string; className: string 
 };
 
 export function EventCard({ event, index }: EventCardProps) {
-  // Get realistic image based on category
-  const getCategoryImage = (category: string, eventId: string) => {
-    const images = realisticImages[category] || realisticImages.Technology;
-    const imageIndex = parseInt(eventId) % images.length;
-    return images[imageIndex];
-  };
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -168,7 +161,7 @@ export function EventCard({ event, index }: EventCardProps) {
             className="h-full w-full"
           >
             <ImageWithFallback
-              src={getCategoryImage(event.category, event.id)}
+              src={event.image}
               alt={event.title}
               className="w-full h-full object-cover"
             />
