@@ -53,7 +53,7 @@ export default function App() {
     }
   }, [selectedCategory, searchQuery]);
 
-  // Category data with images and descriptions
+  // Category data with AI cartoon-style images and clearer names
   const categoryInfo: Record<string, { 
     icon: React.ReactNode; 
     title: string;
@@ -65,30 +65,30 @@ export default function App() {
     "Technology": { 
       icon: <Code className="h-8 w-8" />, 
       title: "Tech Events",
-      description: "Tech conferences, workshops, and hackathons",
-      image: "https://images.unsplash.com/photo-1550745165-9bc0b252726a?w=400&h=300&fit=crop&crop=center&auto=format",
+      description: "Conferences, workshops, and hackathons",
+      image: "https://images.unsplash.com/photo-1620712943543-5d823b5eb5db?w=400&h=300&fit=crop&crop=center&auto=format",
       color: "from-blue-600 to-cyan-600",
       navColor: "bg-gradient-to-r from-blue-500 to-cyan-500"
     },
     "Education": { 
       icon: <GraduationCap className="h-8 w-8" />, 
-      title: "Education & Learning",
-      description: "Career fairs, workshops, and academic events",
-      image: "https://images.unsplash.com/photo-1509062522246-3755977927d7?w=400&h=300&fit=crop&crop=center&auto=format",
+      title: "Education Events",
+      description: "Career fairs, workshops, and learning",
+      image: "https://images.unsplash.com/photo-1588286840104-8957b019727f?w=400&h=300&fit=crop&crop=center&auto=format",
       color: "from-purple-600 to-indigo-600",
       navColor: "bg-gradient-to-r from-purple-500 to-indigo-500"
     },
     "Business": { 
       icon: <Briefcase className="h-8 w-8" />, 
-      title: "Business & Networking",
+      title: "Business Events",
       description: "Networking, conferences, and trade shows",
-      image: "https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=400&h=300&fit=crop&crop=center&auto=format",
+      image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=300&fit=crop&crop=center&auto=format",
       color: "from-green-600 to-emerald-600",
       navColor: "bg-gradient-to-r from-green-500 to-emerald-500"
     },
     "Music": { 
       icon: <Music className="h-8 w-8" />, 
-      title: "Music & Concerts",
+      title: "Music Events",
       description: "Live concerts, festivals, and performances",
       image: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=400&h=300&fit=crop&crop=center&auto=format",
       color: "from-pink-600 to-rose-600",
@@ -96,7 +96,7 @@ export default function App() {
     },
     "Art": { 
       icon: <Palette className="h-8 w-8" />, 
-      title: "Art & Culture",
+      title: "Art Events",
       description: "Exhibitions, galleries, and creative workshops",
       image: "https://images.unsplash.com/photo-1536924940846-227afb31e2a5?w=400&h=300&fit=crop&crop=center&auto=format",
       color: "from-orange-600 to-red-600",
@@ -104,23 +104,23 @@ export default function App() {
     },
     "Food": { 
       icon: <Utensils className="h-8 w-8" />, 
-      title: "Food & Dining",
-      description: "Food festivals, tastings, and culinary events",
+      title: "Food Events",
+      description: "Food festivals, tastings, and dining",
       image: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&h=300&fit=crop&crop=center&auto=format",
       color: "from-yellow-600 to-amber-600",
       navColor: "bg-gradient-to-r from-yellow-500 to-amber-500"
     },
     "Sports": { 
       icon: <Trophy className="h-8 w-8" />, 
-      title: "Sports & Fitness",
-      description: "Tournaments, marathons, and fitness events",
+      title: "Sports Events",
+      description: "Tournaments, marathons, and fitness",
       image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop&crop=center&auto=format",
       color: "from-red-600 to-pink-600",
       navColor: "bg-gradient-to-r from-red-500 to-pink-500"
     },
     "Science": { 
       icon: <Microscope className="h-8 w-8" />, 
-      title: "Science & Innovation",
+      title: "Science Events",
       description: "Innovation fairs, workshops, and research",
       image: "https://images.unsplash.com/photo-1532099436881-5291b1d6d0a?w=400&h=300&fit=crop&crop=center&auto=format",
       color: "from-teal-600 to-cyan-600",
@@ -128,40 +128,40 @@ export default function App() {
     },
     "Gaming": { 
       icon: <Gamepad2 className="h-8 w-8" />, 
-      title: "Gaming & Esports",
-      description: "Tournaments, esports, and gaming events",
-      image: "https://images.unsplash.com/photo-1542751371-fc94c4e36a77?w=400&h=300&fit=crop&crop=center&auto=format",
+      title: "Gaming Events",
+      description: "Tournaments, esports, and gaming",
+      image: "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=400&h=300&fit=crop&crop=center&auto=format",
       color: "from-indigo-600 to-purple-600",
       navColor: "bg-gradient-to-r from-indigo-500 to-purple-500"
     },
     "Comedy": { 
       icon: <Sparkles className="h-8 w-8" />, 
-      title: "Comedy & Entertainment",
-      description: "Stand-up shows, open mics, and comedy nights",
+      title: "Comedy Events",
+      description: "Stand-up shows, open mics, and entertainment",
       image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop&crop=center&auto=format",
       color: "from-yellow-400 to-orange-500",
       navColor: "bg-gradient-to-r from-yellow-400 to-orange-400"
     },
     "Fashion": { 
       icon: <Star className="h-8 w-8" />, 
-      title: "Fashion & Style",
-      description: "Fashion shows, exhibitions, and style events",
+      title: "Fashion Events",
+      description: "Fashion shows, exhibitions, and style",
       image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400&h=300&fit=crop&crop=center&auto=format",
       color: "from-pink-500 to-purple-600",
       navColor: "bg-gradient-to-r from-pink-400 to-purple-400"
     },
     "Clubbing": { 
       icon: <Zap className="h-8 w-8" />, 
-      title: "Nightlife & Parties",
-      description: "Nightlife, parties, and club events",
+      title: "Nightlife Events",
+      description: "Parties, clubs, and nightlife",
       image: "https://images.unsplash.com/photo-1516450360452-9312f51686ad?w=400&h=300&fit=crop&crop=center&auto=format",
       color: "from-purple-600 to-pink-600",
       navColor: "bg-gradient-to-r from-purple-500 to-pink-500"
     },
     "Theater": { 
       icon: <Theater className="h-8 w-8" />, 
-      title: "Theater & Drama",
-      description: "Theater performances, plays, and dramatic arts",
+      title: "Theater Events",
+      description: "Plays, performances, and dramatic arts",
       image: "https://images.unsplash.com/photo-1503095487142-2f5e2cd5e44?w=400&h=300&fit=crop&crop=center&auto=format",
       color: "from-red-700 to-pink-700",
       navColor: "bg-gradient-to-r from-red-600 to-pink-600"
@@ -266,7 +266,7 @@ export default function App() {
                 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setSelectedCategory(category)}
-                className="relative overflow-hidden rounded-3xl bg-white shadow-2xl hover:shadow-3xl transition-all duration-300 group"
+                className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-white to-gray-50 shadow-2xl hover:shadow-3xl transition-all duration-300 group border-2 border-gray-200"
               >
                 <div className="relative h-64 w-full overflow-hidden">
                   <img
@@ -274,14 +274,14 @@ export default function App() {
                     alt={category}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
                   
                   {/* Category Icon */}
                   <motion.div
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.3 }}
-                    className="absolute top-4 left-4 bg-white/95 backdrop-blur-sm p-4 rounded-2xl shadow-xl"
+                    className="absolute top-4 left-4 bg-white/95 backdrop-blur-sm p-3 rounded-xl shadow-lg border border-white"
                   >
                     <div className={`text-${categoryInfo[category]?.color.split(' ')[0]}-600`}>
                       {categoryInfo[category]?.icon}
@@ -304,9 +304,9 @@ export default function App() {
                   initial={{ opacity: 0, x: 20 }}
                   whileHover={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.3 }}
-                  className="absolute top-4 right-4 bg-gradient-to-r from-yellow-400 to-pink-500 p-3 rounded-full shadow-xl"
+                  className="absolute top-4 right-4 bg-gradient-to-r from-yellow-400 to-pink-500 p-2 rounded-full shadow-lg"
                 >
-                  <ArrowRight className="h-6 w-6 text-white" />
+                  <ArrowRight className="h-5 w-5 text-white" />
                 </motion.div>
 
                 {/* Event Count Badge */}
@@ -314,7 +314,7 @@ export default function App() {
                   initial={{ opacity: 0, scale: 0 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.5 }}
-                  className="absolute top-4 right-4 bg-gradient-to-r from-green-400 to-blue-500 px-3 py-1 rounded-full text-white text-xs font-bold shadow-lg"
+                  className="absolute top-4 right-4 bg-gradient-to-r from-green-400 to-blue-500 px-2 py-1 rounded-full text-white text-xs font-bold shadow-lg"
                 >
                   {Math.floor(Math.random() * 5) + 2} Events
                 </motion.div>
@@ -403,7 +403,7 @@ export default function App() {
           <div className="max-w-2xl mx-auto">
             <input
               type="text"
-              placeholder={`Search ${categoryInfo[selectedCategory]?.title || selectedCategory} events...`}
+              placeholder={`Search ${categoryInfo[selectedCategory]?.title || selectedCategory}...`}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full px-8 py-4 bg-white/95 border-2 border-white rounded-full text-gray-800 placeholder-gray-500 focus:outline-none focus:border-yellow-400 focus:ring-4 focus:ring-yellow-400/20 transition-all duration-300 shadow-xl"
