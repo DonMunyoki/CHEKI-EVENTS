@@ -1,9 +1,8 @@
 import { useState, useMemo, useEffect } from "react";
 import { Header } from "./components/Header";
-import { FilterBar } from "./components/FilterBar";
 import { EventCard, Event } from "./components/EventCard";
 import { motion } from "framer-motion";
-import { CalendarDays, Code, Briefcase, Music, Palette, Utensils, Gamepad2, GraduationCap, Microscope, Trophy, Sparkles, Zap, Star, Rocket, TrendingUp, Users, MapPin, Clock, Ticket } from "lucide-react";
+import { Code, Briefcase, Music, Palette, Utensils, Gamepad2, GraduationCap, Microscope, Trophy, Sparkles, Star, Zap } from "lucide-react";
 import { apiService } from "./services/api";
 
 export default function App() {
@@ -42,7 +41,6 @@ export default function App() {
     const loadFilteredEvents = async () => {
       try {
         setLoading(true);
-        // When "All" is selected, don't pass category filter to API
         const categoryFilter = selectedCategory === "All" ? undefined : selectedCategory;
         const searchFilter = searchQuery || undefined;
         
@@ -57,7 +55,6 @@ export default function App() {
       }
     };
 
-    // Always load events when filters change
     loadFilteredEvents();
   }, [searchQuery, selectedCategory]);
 
@@ -72,144 +69,112 @@ export default function App() {
     });
   }, [events, searchQuery, selectedCategory]);
 
-  // Group events by category for dashboard sections
-  const eventsByCategory = useMemo(() => {
-    const grouped: Record<string, Event[]> = {};
-    filteredEvents.forEach(event => {
-      if (!grouped[event.category]) {
-        grouped[event.category] = [];
-      }
-      grouped[event.category].push(event);
-    });
-    return grouped;
-  }, [filteredEvents]);
-
-  // Category info with better icons and colors
+  // Category icons and colors
   const categoryInfo: Record<string, { 
     icon: React.ReactNode; 
-    primaryColor: string; 
-    secondaryColor: string; 
-    bgGradient: string; 
+    color: string;
+    bgGradient: string;
     borderColor: string;
-    description: string;
   }> = {
     "Technology": { 
-      icon: <Code className="h-6 w-6" />, 
-      primaryColor: "text-blue-600", 
-      secondaryColor: "text-cyan-500",
-      bgGradient: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-      borderColor: "border-blue-500",
-      description: "Tech conferences, workshops, and hackathons"
+      icon: <Code className="h-5 w-5" />, 
+      color: "text-sky-400",
+      bgGradient: "from-sky-600 to-blue-600",
+      borderColor: "border-sky-500"
     },
     "Education": { 
-      icon: <GraduationCap className="h-6 w-6" />, 
-      primaryColor: "text-purple-600", 
-      secondaryColor: "text-indigo-500",
-      bgGradient: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
-      borderColor: "border-purple-500",
-      description: "Academic events, career fairs, and workshops"
+      icon: <GraduationCap className="h-5 w-5" />, 
+      color: "text-blue-400",
+      bgGradient: "from-blue-600 to-navy-600",
+      borderColor: "border-blue-500"
     },
     "Business": { 
-      icon: <Briefcase className="h-6 w-6" />, 
-      primaryColor: "text-green-600", 
-      secondaryColor: "text-emerald-500",
-      bgGradient: "linear-gradient(135deg, #fa709a 0%, #fee140 100%)",
-      borderColor: "border-green-500",
-      description: "Networking, conferences, and trade shows"
+      icon: <Briefcase className="h-5 w-5" />, 
+      color: "text-sky-300",
+      bgGradient: "from-sky-500 to-blue-500",
+      borderColor: "border-sky-400"
     },
     "Music": { 
-      icon: <Music className="h-6 w-6" />, 
-      primaryColor: "text-pink-600", 
-      secondaryColor: "text-rose-500",
-      bgGradient: "linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)",
-      borderColor: "border-pink-500",
-      description: "Concerts, festivals, and live performances"
+      icon: <Music className="h-5 w-5" />, 
+      color: "text-blue-300",
+      bgGradient: "from-blue-500 to-sky-500",
+      borderColor: "border-blue-400"
     },
     "Art": { 
-      icon: <Palette className="h-6 w-6" />, 
-      primaryColor: "text-orange-600", 
-      secondaryColor: "text-yellow-500",
-      bgGradient: "linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)",
-      borderColor: "border-orange-500",
-      description: "Exhibitions, galleries, and creative workshops"
+      icon: <Palette className="h-5 w-5" />, 
+      color: "text-sky-400",
+      bgGradient: "from-sky-600 to-blue-600",
+      borderColor: "border-sky-500"
     },
     "Food": { 
-      icon: <Utensils className="h-6 w-6" />, 
-      primaryColor: "text-yellow-600", 
-      secondaryColor: "text-amber-500",
-      bgGradient: "linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)",
-      borderColor: "border-yellow-500",
-      description: "Food festivals, tastings, and culinary events"
+      icon: <Utensils className="h-5 w-5" />, 
+      color: "text-blue-400",
+      bgGradient: "from-blue-600 to-navy-600",
+      borderColor: "border-blue-500"
     },
     "Sports": { 
-      icon: <Trophy className="h-6 w-6" />, 
-      primaryColor: "text-red-600", 
-      secondaryColor: "text-rose-500",
-      bgGradient: "linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)",
-      borderColor: "border-red-500",
-      description: "Competitions, tournaments, and fitness events"
+      icon: <Trophy className="h-5 w-5" />, 
+      color: "text-sky-500",
+      bgGradient: "from-sky-500 to-blue-500",
+      borderColor: "border-sky-400"
     },
     "Science": { 
-      icon: <Microscope className="h-6 w-6" />, 
-      primaryColor: "text-teal-600", 
-      secondaryColor: "text-cyan-500",
-      bgGradient: "linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)",
-      borderColor: "border-teal-500",
-      description: "Research, innovation, and scientific events"
+      icon: <Microscope className="h-5 w-5" />, 
+      color: "text-blue-400",
+      bgGradient: "from-blue-600 to-sky-600",
+      borderColor: "border-blue-500"
     },
     "Gaming": { 
-      icon: <Gamepad2 className="h-6 w-6" />, 
-      primaryColor: "text-indigo-600", 
-      secondaryColor: "text-purple-500",
-      bgGradient: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-      borderColor: "border-indigo-500",
-      description: "Gaming tournaments and esports competitions"
+      icon: <Gamepad2 className="h-5 w-5" />, 
+      color: "text-sky-300",
+      bgGradient: "from-sky-500 to-blue-500",
+      borderColor: "border-sky-400"
     },
     "Comedy": { 
-      icon: <Sparkles className="h-6 w-6" />, 
-      primaryColor: "text-yellow-600", 
-      secondaryColor: "text-orange-500",
-      bgGradient: "linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)",
-      borderColor: "border-yellow-500",
-      description: "Stand-up comedy and entertainment shows"
+      icon: <Sparkles className="h-5 w-5" />, 
+      color: "text-blue-400",
+      bgGradient: "from-blue-600 to-navy-600",
+      borderColor: "border-blue-500"
     },
     "Fashion": { 
-      icon: <Star className="h-6 w-6" />, 
-      primaryColor: "text-pink-600", 
-      secondaryColor: "text-purple-500",
-      bgGradient: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
-      borderColor: "border-pink-500",
-      description: "Fashion shows, exhibitions, and style events"
+      icon: <Star className="h-5 w-5" />, 
+      color: "text-sky-500",
+      bgGradient: "from-sky-500 to-blue-500",
+      borderColor: "border-sky-400"
     },
     "Clubbing": { 
-      icon: <Zap className="h-6 w-6" />, 
-      primaryColor: "text-purple-600", 
-      secondaryColor: "text-pink-500",
-      bgGradient: "linear-gradient(135deg, #fa709a 0%, #fee140 100%)",
-      borderColor: "border-purple-500",
-      description: "Nightlife, parties, and club events"
+      icon: <Zap className="h-5 w-5" />, 
+      color: "text-blue-400",
+      bgGradient: "from-blue-600 to-sky-600",
+      borderColor: "border-blue-500"
+    },
+    "All": { 
+      icon: <Sparkles className="h-5 w-5" />, 
+      color: "text-sky-400",
+      bgGradient: "from-sky-600 to-blue-600",
+      borderColor: "border-sky-500"
     },
   };
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-black via-blue-950 to-black flex items-center justify-center">
         <div className="text-center">
           <motion.div
             animate={{ rotate: 360 }}
             transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
             className="w-16 h-16 mx-auto mb-6"
           >
-            <div className="w-full h-full bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
-              <Rocket className="h-8 w-8 text-white" />
+            <div className="w-full h-full bg-gradient-to-r from-sky-500 to-blue-600 rounded-full flex items-center justify-center">
+              <Sparkles className="h-8 w-8 text-white" />
             </div>
           </motion.div>
           <motion.p
             animate={{ opacity: [0.5, 1, 0.5] }}
             transition={{ duration: 2, repeat: Infinity }}
-            className="text-white text-lg font-medium"
+            className="text-sky-400 text-lg font-medium"
           >
-            Loading amazing events...
+            Loading events...
           </motion.p>
         </div>
       </div>
@@ -218,14 +183,14 @@ export default function App() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-black via-blue-950 to-black flex items-center justify-center">
         <div className="text-center">
-          <CalendarDays className="h-16 w-16 text-red-400 mx-auto mb-6" />
+          <Sparkles className="h-16 w-16 text-red-400 mx-auto mb-6" />
           <h2 className="text-3xl font-bold text-white mb-4">Oops!</h2>
-          <p className="text-gray-300 mb-6">{error}</p>
+          <p className="text-gray-400 mb-6">{error}</p>
           <button 
             onClick={() => window.location.reload()}
-            className="px-6 py-2 bg-gradient-to-r from-red-600 to-pink-600 text-white rounded-lg hover:shadow-lg transition-all duration-300"
+            className="px-6 py-2 bg-gradient-to-r from-sky-600 to-blue-600 text-white rounded-lg hover:shadow-lg transition-all duration-300"
           >
             Try Again
           </button>
@@ -235,180 +200,96 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+    <div className="min-h-screen bg-gradient-to-br from-black via-blue-950 to-black flex flex-col">
       <Header userName="Guest" onLogout={() => {}} />
       
-      <div className="container mx-auto px-4 py-8">
-        {/* Hero Section */}
+      <div className="flex-1 container mx-auto px-4 py-8 pb-24">
+        {/* Search Bar */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-12"
+          className="mb-8"
         >
-          <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent mb-4">
-            CHEKI EVENTS
-          </h1>
-          <p className="text-xl text-gray-300 mb-8">Discover Amazing Events in Nairobi</p>
-        </motion.div>
-
-        {/* Filter Bar */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="mb-12"
-        >
-          <FilterBar
-            searchQuery={searchQuery}
-            onSearchChange={setSearchQuery}
-            selectedCategory={selectedCategory}
-            onCategoryChange={setSelectedCategory}
-            categories={categories}
-          />
-        </motion.div>
-
-        {/* Dashboard Sections */}
-        {selectedCategory === "All" && Object.keys(eventsByCategory).length > 0 ? (
-          <div className="space-y-16">
-            {Object.entries(eventsByCategory).map(([category, categoryEvents], index) => (
-              <motion.div
-                key={category}
-                initial={{ opacity: 0, x: -50 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-              >
-                {/* Category Header */}
-                <div className="mb-8">
-                  <div className="flex items-center gap-4 mb-4">
-                    <div 
-                      className="p-4 rounded-2xl text-white shadow-xl"
-                      style={{ background: categoryInfo[category]?.bgGradient }}
-                    >
-                      {categoryInfo[category]?.icon}
-                    </div>
-                    <div>
-                      <h2 className="text-3xl font-bold text-white mb-1">{category}</h2>
-                      <p className="text-gray-400">{categoryInfo[category]?.description}</p>
-                    </div>
-                    <div className="ml-auto flex items-center gap-4">
-                      <div className="text-right">
-                        <p className="text-2xl font-bold text-white">{categoryEvents.length}</p>
-                        <p className="text-sm text-gray-400">Events</p>
-                      </div>
-                      <div className={`w-16 h-16 rounded-full border-4 ${categoryInfo[category]?.borderColor} border-opacity-50 flex items-center justify-center bg-slate-800 bg-opacity-50`}>
-                        <Users className="h-6 w-6 text-white" />
-                      </div>
-                    </div>
-                  </div>
-                  
-                  {/* Category Stats */}
-                  <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-                    <div className="bg-slate-800 bg-opacity-50 rounded-xl p-4 border border-slate-700">
-                      <div className="flex items-center gap-3">
-                        <TrendingUp className="h-5 w-5 text-green-400" />
-                        <div>
-                          <p className="text-sm text-gray-400">Popular</p>
-                          <p className="text-lg font-bold text-white">Trending</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="bg-slate-800 bg-opacity-50 rounded-xl p-4 border border-slate-700">
-                      <div className="flex items-center gap-3">
-                        <Clock className="h-5 w-5 text-blue-400" />
-                        <div>
-                          <p className="text-sm text-gray-400">This Week</p>
-                          <p className="text-lg font-bold text-white">{Math.floor(categoryEvents.length * 0.6)}</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="bg-slate-800 bg-opacity-50 rounded-xl p-4 border border-slate-700">
-                      <div className="flex items-center gap-3">
-                        <MapPin className="h-5 w-5 text-purple-400" />
-                        <div>
-                          <p className="text-sm text-gray-400">Venues</p>
-                          <p className="text-lg font-bold text-white">{Math.ceil(categoryEvents.length * 0.8)}</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="bg-slate-800 bg-opacity-50 rounded-xl p-4 border border-slate-700">
-                      <div className="flex items-center gap-3">
-                        <Ticket className="h-5 w-5 text-pink-400" />
-                        <div>
-                          <p className="text-sm text-gray-400">Available</p>
-                          <p className="text-lg font-bold text-white">{categoryEvents.length * 50}</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Events Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                  {categoryEvents.map((event, eventIndex) => (
-                    <motion.div
-                      key={event.id}
-                      initial={{ opacity: 0, y: 30 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5, delay: eventIndex * 0.1 }}
-                      whileHover={{ 
-                        scale: 1.05,
-                        boxShadow: "0 20px 40px rgba(0, 0, 0, 0.3)"
-                      }}
-                    >
-                      <EventCard event={event} index={eventIndex} />
-                    </motion.div>
-                  ))}
-                </div>
-
-                {/* View More Button */}
-                <div className="text-center mt-8">
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full font-semibold hover:shadow-lg transition-all duration-300"
-                  >
-                    View All {category} Events
-                  </motion.button>
-                </div>
-              </motion.div>
-            ))}
+          <div className="max-w-2xl mx-auto">
+            <input
+              type="text"
+              placeholder="Search events..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full px-6 py-4 bg-black/50 border border-sky-800/50 rounded-2xl text-white placeholder-sky-400 focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20 transition-all duration-300"
+            />
           </div>
+        </motion.div>
+
+        {/* Events Grid */}
+        {filteredEvents.length === 0 ? (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-center py-20"
+          >
+            <Sparkles className="h-16 w-16 text-gray-600 mx-auto mb-6" />
+            <h3 className="text-2xl font-bold text-white mb-4">No events found</h3>
+            <p className="text-gray-400">Try adjusting your search</p>
+          </motion.div>
         ) : (
-          /* Single Category View */
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
-            className="mt-12"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
           >
-            {filteredEvents.length === 0 ? (
-              <div className="text-center py-20">
-                <CalendarDays className="h-16 w-16 text-gray-400 mx-auto mb-6" />
-                <h3 className="text-2xl font-bold text-white mb-4">No events found</h3>
-                <p className="text-gray-400">Try adjusting your search or filters</p>
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                {filteredEvents.map((event, index) => (
-                  <motion.div
-                    key={event.id}
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                    whileHover={{ 
-                      scale: 1.05,
-                      boxShadow: "0 20px 40px rgba(0, 0, 0, 0.3)"
-                    }}
-                  >
-                    <EventCard event={event} index={index} />
-                  </motion.div>
-                ))}
-              </div>
-            )}
+            {filteredEvents.map((event, index) => (
+              <motion.div
+                key={event.id}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                whileHover={{ 
+                  scale: 1.05,
+                  boxShadow: "0 20px 40px rgba(0, 0, 0, 0.3)"
+                }}
+              >
+                <EventCard event={event} index={index} />
+              </motion.div>
+            ))}
           </motion.div>
         )}
       </div>
+
+      {/* Bottom Category Navigation */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.3 }}
+        className="fixed bottom-0 left-0 right-0 bg-black/90 backdrop-blur-lg border-t border-sky-800/50"
+      >
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex justify-center gap-2 md:gap-4 overflow-x-auto">
+            {categories.map((category) => (
+              <motion.button
+                key={category}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setSelectedCategory(category)}
+                className={`flex flex-col items-center gap-1 px-3 py-2 rounded-xl transition-all duration-300 ${
+                  selectedCategory === category
+                    ? `bg-gradient-to-r ${categoryInfo[category]?.bgGradient} ${categoryInfo[category]?.borderColor} text-white shadow-lg shadow-sky-500/50`
+                    : 'bg-black/50 border border-sky-800/50 text-sky-400 hover:border-sky-600 hover:text-sky-300'
+                }`}
+              >
+                <div className={selectedCategory === category ? 'text-white' : categoryInfo[category]?.color}>
+                  {categoryInfo[category]?.icon}
+                </div>
+                <span className="text-xs font-medium whitespace-nowrap">
+                  {category}
+                </span>
+              </motion.button>
+            ))}
+          </div>
+        </div>
+      </motion.div>
     </div>
   );
 }
