@@ -123,6 +123,83 @@ const currentEvents = [
     price: "KES 2,500",
     image: "https://images.unsplash.com/photo-1463100095044-357583b65b7c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxqYXp6JTIwZmVzdGl2YWx8ZW58MHx8fHwxNzYxMjQ2NTU2fDA&ixlib=rb-4.1.0&q=80&w=1080",
     ticketLink: "https://ticketsasa.com/events/nairobi-jazz-festival-2026"
+  },
+  {
+    title: "Friday Night Party at The Alchemist",
+    description: "Experience Nairobi's hottest Friday night party at The Alchemist with top DJs playing Afrobeats, Amapiano, and international hits. Premium cocktails and vibrant atmosphere.",
+    date: "Every Friday in March",
+    time: "9:00 PM - 4:00 AM",
+    location: "The Alchemist, Westlands",
+    category: "Clubbing",
+    price: "KES 1,000",
+    image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjbHViaCUyMG5pZ2h0fGVufDB8fHx8MTc2MTI0NjU1Nnww&ixlib=rb-4.1.0&q=80&w=1080",
+    ticketLink: "https://ticketsasa.com/events/friday-night-alchemist-2026"
+  },
+  {
+    title: "Saturday Ladies Night at K1 Klub House",
+    description: "Ladies night every Saturday at K1 Klub House with free entry for ladies, 2-for-1 drinks, and Nairobi's best DJs spinning the latest hits.",
+    date: "Every Saturday in March",
+    time: "10:00 PM - 5:00 AM",
+    location: "K1 Klub House, Parklands",
+    category: "Clubbing",
+    price: "KES 500 (Gents), Free (Ladies)",
+    image: "https://images.unsplash.com/photo-1544968347-9a1f61b1ad0a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwYXJ0eSUyMGNsdWJ8ZW58MHx8fHwxNzYxMjQ2NTU2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+    ticketLink: "https://ticketsasa.com/events/saturday-ladies-night-k1-2026"
+  },
+  {
+    title: "International DJ Night at B-Flat",
+    description: "Special guest international DJ performance at B-Flat Nairobi's premier rooftop club. Featuring world-class electronic music and panoramic city views.",
+    date: "March 15, 2026",
+    time: "11:00 PM - 6:00 AM",
+    location: "B-Flat, 14 Riverside",
+    category: "Clubbing",
+    price: "KES 2,000",
+    image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxuaWdodGNsdWIlMjBwYXJ0eXxlbnwwfHx8fDE3NjEyNDY1NTZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    ticketLink: "https://ticketsasa.com/events/international-dj-bflat-2026"
+  },
+  {
+    title: "Karaoke Night at Galileo Lounge",
+    description: "Every Wednesday karaoke night at Galileo Lounge. Sing your heart out to your favorite hits with friends and enjoy special drink offers.",
+    date: "Every Wednesday in March",
+    time: "8:00 PM - 2:00 AM",
+    location: "Galileo Lounge, Westlands",
+    category: "Clubbing",
+    price: "KES 300",
+    image: "https://images.unsplash.com/photo-1516450360452-9312f51686ad?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxrYXJhb2tlJTIwYmFyfGVufDB8fHx8MTc2MTI0NjU1Nnww&ixlib=rb-4.1.0&q=80&w=1080",
+    ticketLink: "https://ticketsasa.com/events/karaoke-night-galileo-2026"
+  },
+  {
+    title: "Urban Music Night at Changes Nairobi",
+    description: "Urban music and hip-hop night at Changes Nairobi featuring local artists and DJs. Experience Nairobi's underground music scene.",
+    date: "March 20, 2026",
+    time: "10:00 PM - 4:00 AM",
+    location: "Changes Nairobi, Kijabe Street",
+    category: "Clubbing",
+    price: "KES 800",
+    image: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtdXNpYyUyMHByb2R1Y3Rpb24lMjBzdHVkaW98ZW58MHx8fHwxNzYxMjQ2NTU2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+    ticketLink: "https://ticketsasa.com/events/urban-music-changes-2026"
+  },
+  {
+    title: "Rooftop Party at The Lord Erroll",
+    description: "Exclusive rooftop party at The Lord Erroll with sophisticated ambiance, premium cocktails, and Nairobi's elite crowd. Dress code: Smart casual.",
+    date: "March 25, 2026",
+    time: "9:00 PM - 3:00 AM",
+    location: "The Lord Erroll, Runda",
+    category: "Clubbing",
+    price: "KES 3,000",
+    image: "https://images.unsplash.com/photo-1511795406834-213e69c13f07?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcmVtaXVtJTIwcm9vZnRvcCUyMHBhcnR5fGVufDB8fHx8MTc2MTI0NjU1Nnww&ixlib=rb-4.1.0&q=80&w=1080",
+    ticketLink: "https://ticketsasa.com/events/rooftop-party-lord-erroll-2026"
+  },
+  {
+    title: "Latin Night at Havana Bar",
+    description: "Dance the night away to Latin rhythms at Havana Bar. Salsa, bachata, and reggaeton with professional dancers and live percussion.",
+    date: "Every Thursday in March",
+    time: "9:00 PM - 3:00 AM",
+    location: "Havana Bar, Westlands",
+    category: "Clubbing",
+    price: "KES 600",
+    image: "https://images.unsplash.com/photo-1519675869491-65a383e27e6f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsYXRpbiUyMGRhbmNpbmd8ZW58MHx8fHwxNzYxMjQ2NTU2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+    ticketLink: "https://ticketsasa.com/events/latin-night-havana-2026"
   }
 ];
 
