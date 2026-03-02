@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Header } from "./components/Header";
 import { EventCard, Event } from "./components/EventCard";
 import { motion } from "framer-motion";
-import { Code, Briefcase, Music, Palette, Utensils, Gamepad2, GraduationCap, Microscope, Trophy, Sparkles, Star, Zap, ArrowRight } from "lucide-react";
+import { Code, Briefcase, Music, Palette, Utensils, Gamepad2, GraduationCap, Microscope, Trophy, Sparkles, Star, Zap, ArrowRight, Theater } from "lucide-react";
 import { apiService } from "./services/api";
 
 export default function App() {
@@ -146,7 +146,7 @@ export default function App() {
       color: "from-purple-600 to-pink-600"
     },
     "Theater": { 
-      icon: <Sparkles className="h-8 w-8" />, 
+      icon: <Theater className="h-8 w-8" />, 
       title: "Theater & Drama",
       description: "Theater performances, plays, and dramatic arts",
       image: "https://images.unsplash.com/photo-1503095487142-2f5e2cd5e44?w=400&h=300&fit=crop&crop=center&auto=format",
