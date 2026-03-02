@@ -33,7 +33,7 @@ const currentEvents = [
     location: "Jamhuri Showground, Nairobi",
     category: "Business",
     price: "KES 200",
-    image: "https://images.unsplash.com/photo-1464207687429-7505649dae38?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0cmFkZSUyMGZhaXJ8ZW58MHx8fHwxNzYxMjQ2NTU2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+    image: "https://images.unsplash.com/photo-1464207687429-7505649dae38?w=800&h=600&fit=crop&crop=entropy&auto=format",
     ticketLink: "https://ticketsasa.com/events/nairobi-international-trade-fair-2026"
   },
   {
@@ -44,7 +44,7 @@ const currentEvents = [
     location: "Kenyatta International Convention Centre (KICC)",
     category: "Music",
     price: "KES 3,500",
-    image: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb25jZXJ0JTIwbXVzaWN8ZW58MHx8fHwxNzYxMjQ2NTU2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+    image: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800&h=600&fit=crop&crop=entropy&auto=format",
     ticketLink: "https://ticketsasa.com/events/sauti-sol-live-concert-2026"
   },
   {
@@ -55,7 +55,7 @@ const currentEvents = [
     location: "Edge Convention Centre, Nairobi",
     category: "Technology",
     price: "KES 5,000",
-    image: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0ZWNobm9sb2d5JTIwY29uZmVyZW5jZXxlbnwwfHx8fDE3NjEyNDY1NTZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    image: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=800&h=600&fit=crop&crop=entropy&auto=format",
     ticketLink: "https://ticketsasa.com/events/nairobi-tech-week-2026"
   },
   {
@@ -66,7 +66,7 @@ const currentEvents = [
     location: "Carnivore Restaurant, Nairobi",
     category: "Comedy",
     price: "KES 2,000",
-    image: "https://images.unsplash.com/photo-1516232698864-2b8c1fc6ab1c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb21lZHklMjBzaG93JTIwbmlnaHR8ZW58MHx8fHwxNzYxMjQ2NTU2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+    image: "https://images.unsplash.com/photo-1516232698864-2b8c1fc6ab1c?w=800&h=600&fit=crop&crop=entropy&auto=format",
     ticketLink: "https://ticketsasa.com/events/eric-omondi-comedy-night-2026"
   },
   {
@@ -77,7 +77,7 @@ const currentEvents = [
     location: "Sarit Centre Expo Centre, Nairobi",
     category: "Fashion",
     price: "KES 1,500",
-    image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmYXNoaW9uJTIwc2hvd3xlbnwwfHx8fDE3NjEyNDY1NTZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&h=600&fit=crop&crop=entropy&auto=format",
     ticketLink: "https://ticketsasa.com/events/nairobi-fashion-week-2026"
   },
   {
@@ -88,7 +88,7 @@ const currentEvents = [
     location: "Uhuru Gardens, Nairobi",
     category: "Sports",
     price: "KES 1,000",
-    image: "https://images.unsplash.com/photo-1544717297-fa95b6ee9643?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtYXJhdGhvbiUyMHJ1bm5pbmd8ZW58MHx8fHwxNzYxMjQ2NTU2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+    image: "https://images.unsplash.com/photo-1544717297-fa95b6ee9643?w=800&h=600&fit=crop&crop=entropy&auto=format",
     ticketLink: "https://ticketsasa.com/events/nairobi-marathon-2026"
   },
   {
@@ -99,7 +99,7 @@ const currentEvents = [
     location: "KICC Grounds, Nairobi",
     category: "Food",
     price: "KES 800",
-    image: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmb29kJTIwZmVzdGl2YWx8ZW58MHx8fHwxNzYxMjQ2NTU2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+    image: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&h=600&fit=crop&crop=entropy&auto=format",
     ticketLink: "https://ticketsasa.com/events/kenya-food-festival-2026"
   },
   {
@@ -110,7 +110,7 @@ const currentEvents = [
     location: "National Museum of Kenya, Nairobi",
     category: "Art",
     price: "KES 500",
-    image: "https://images.unsplash.com/photo-1536924940846-227afb31e2a5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhcnQlMjBleGhpYml0aW9ufGVufDB8fHx8MTc2MTI0NjU1Nnww&ixlib=rb-4.1.0&q=80&w=1080",
+    image: "https://images.unsplash.com/photo-1536924940846-227afb31e2a5?w=800&h=600&fit=crop&crop=entropy&auto=format",
     ticketLink: "https://ticketsasa.com/events/nairobi-art-biennale-2026"
   },
   {
@@ -121,7 +121,7 @@ const currentEvents = [
     location: "Kilimani Primary School Grounds, Nairobi",
     category: "Music",
     price: "KES 2,500",
-    image: "https://images.unsplash.com/photo-1463100095044-357583b65b7c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxqYXp6JTIwZmVzdGl2YWx8ZW58MHx8fHwxNzYxMjQ2NTU2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+    image: "https://images.unsplash.com/photo-1463100095044-357583b65b7c?w=800&h=600&fit=crop&crop=entropy&auto=format",
     ticketLink: "https://ticketsasa.com/events/nairobi-jazz-festival-2026"
   },
   {
@@ -132,7 +132,7 @@ const currentEvents = [
     location: "The Alchemist, Westlands",
     category: "Clubbing",
     price: "KES 1,000",
-    image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjbHViaCUyMG5pZ2h0fGVufDB8fHx8MTc2MTI0NjU1Nnww&ixlib=rb-4.1.0&q=80&w=1080",
+    image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=600&fit=crop&crop=entropy&auto=format",
     ticketLink: "https://ticketsasa.com/events/friday-night-alchemist-2026"
   },
   {
@@ -143,7 +143,7 @@ const currentEvents = [
     location: "K1 Klub House, Parklands",
     category: "Clubbing",
     price: "KES 500 (Gents), Free (Ladies)",
-    image: "https://images.unsplash.com/photo-1544968347-9a1f61b1ad0a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwYXJ0eSUyMGNsdWJ8ZW58MHx8fHwxNzYxMjQ2NTU2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+    image: "https://images.unsplash.com/photo-1544968347-9a1f61b1ad0a?w=800&h=600&fit=crop&crop=entropy&auto=format",
     ticketLink: "https://ticketsasa.com/events/saturday-ladies-night-k1-2026"
   },
   {
@@ -154,7 +154,7 @@ const currentEvents = [
     location: "B-Flat, 14 Riverside",
     category: "Clubbing",
     price: "KES 2,000",
-    image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxuaWdodGNsdWIlMjBwYXJ0eXxlbnwwfHx8fDE3NjEyNDY1NTZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=600&fit=crop&crop=entropy&auto=format",
     ticketLink: "https://ticketsasa.com/events/international-dj-bflat-2026"
   },
   {
@@ -165,7 +165,7 @@ const currentEvents = [
     location: "Galileo Lounge, Westlands",
     category: "Clubbing",
     price: "KES 300",
-    image: "https://images.unsplash.com/photo-1516450360452-9312f51686ad?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxrYXJhb2tlJTIwYmFyfGVufDB8fHx8MTc2MTI0NjU1Nnww&ixlib=rb-4.1.0&q=80&w=1080",
+    image: "https://images.unsplash.com/photo-1516450360452-9312f51686ad?w=800&h=600&fit=crop&crop=entropy&auto=format",
     ticketLink: "https://ticketsasa.com/events/karaoke-night-galileo-2026"
   },
   {
@@ -176,7 +176,7 @@ const currentEvents = [
     location: "Changes Nairobi, Kijabe Street",
     category: "Clubbing",
     price: "KES 800",
-    image: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtdXNpYyUyMHByb2R1Y3Rpb24lMjBzdHVkaW98ZW58MHx8fHwxNzYxMjQ2NTU2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+    image: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=800&h=600&fit=crop&crop=entropy&auto=format",
     ticketLink: "https://ticketsasa.com/events/urban-music-changes-2026"
   },
   {
@@ -187,7 +187,7 @@ const currentEvents = [
     location: "The Lord Erroll, Runda",
     category: "Clubbing",
     price: "KES 3,000",
-    image: "https://images.unsplash.com/photo-1511795406834-213e69c13f07?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcmVtaXVtJTIwcm9vZnRvcCUyMHBhcnR5fGVufDB8fHx8MTc2MTI0NjU1Nnww&ixlib=rb-4.1.0&q=80&w=1080",
+    image: "https://images.unsplash.com/photo-1511795406834-213e69c13f07?w=800&h=600&fit=crop&crop=entropy&auto=format",
     ticketLink: "https://ticketsasa.com/events/rooftop-party-lord-erroll-2026"
   },
   {
@@ -198,7 +198,7 @@ const currentEvents = [
     location: "Havana Bar, Westlands",
     category: "Clubbing",
     price: "KES 600",
-    image: "https://images.unsplash.com/photo-1519675869491-65a383e27e6f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsYXRpbiUyMGRhbmNpbmd8ZW58MHx8fHwxNzYxMjQ2NTU2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+    image: "https://images.unsplash.com/photo-1519675869491-65a383e27e6f?w=800&h=600&fit=crop&crop=entropy&auto=format",
     ticketLink: "https://ticketsasa.com/events/latin-night-havana-2026"
   }
 ];

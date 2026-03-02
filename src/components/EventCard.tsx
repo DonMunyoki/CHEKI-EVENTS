@@ -24,13 +24,16 @@ interface EventCardProps {
 }
 
 const categoryColors: Record<string, string> = {
-  Music: "bg-sky-500",
-  Art: "bg-gray-700",
-  Food: "bg-sky-400",
-  Comedy: "bg-yellow-500",
-  Sports: "bg-green-500",
-  Theater: "bg-purple-500",
-  Nightlife: "bg-indigo-600",
+  Music: "bg-gradient-to-r from-purple-500 to-pink-500",
+  Art: "bg-gradient-to-r from-gray-700 to-gray-900",
+  Food: "bg-gradient-to-r from-orange-500 to-red-500",
+  Comedy: "bg-gradient-to-r from-yellow-400 to-orange-500",
+  Sports: "bg-gradient-to-r from-green-500 to-emerald-600",
+  Theater: "bg-gradient-to-r from-purple-600 to-indigo-600",
+  Business: "bg-gradient-to-r from-blue-600 to-cyan-600",
+  Technology: "bg-gradient-to-r from-indigo-500 to-purple-600",
+  Fashion: "bg-gradient-to-r from-pink-500 to-rose-600",
+  Clubbing: "bg-gradient-to-r from-purple-600 to-pink-600",
 };
 
 export function EventCard({ event, index }: EventCardProps) {
@@ -40,11 +43,11 @@ export function EventCard({ event, index }: EventCardProps) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: index * 0.1 }}
     >
-      <Card className="overflow-hidden hover:shadow-2xl transition-all duration-300 border border-gray-200 shadow-md group bg-white">
-        <div className="relative h-56 w-full overflow-hidden">
+      <Card className="overflow-hidden hover:shadow-2xl transition-all duration-300 border border-purple-200 shadow-lg group bg-white rounded-2xl hover:scale-[1.02]">
+        <div className="relative h-64 w-full overflow-hidden">
           <motion.div
-            whileHover={{ scale: 1.05 }}
-            transition={{ duration: 0.3 }}
+            whileHover={{ scale: 1.08 }}
+            transition={{ duration: 0.4 }}
             className="h-full w-full"
           >
             <ImageWithFallback
@@ -54,64 +57,64 @@ export function EventCard({ event, index }: EventCardProps) {
             />
           </motion.div>
 
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
           <Badge
-            className={`absolute top-3 right-3 ${
-              categoryColors[event.category] || "bg-gray-500"
-            } text-white border-0 shadow-lg hover:scale-110 transition-transform`}
+            className={`absolute top-4 right-4 ${
+              categoryColors[event.category] || "bg-gradient-to-r from-gray-500 to-gray-700"
+            } text-white border-0 shadow-xl hover:scale-110 transition-transform font-semibold px-4 py-2`}
           >
             {event.category}
           </Badge>
 
           <motion.div
-            className="absolute top-3 left-3 bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-full text-xs flex items-center gap-1.5 shadow-lg border border-gray-200"
+            className="absolute top-4 left-4 bg-white/95 backdrop-blur-sm px-4 py-2 rounded-full text-sm flex items-center gap-2 shadow-xl border border-purple-200 font-bold"
             initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2 }}
           >
-            <Ticket className="h-3.5 w-3.5 text-sky-600" />
-            <span>{event.price}</span>
+            <Ticket className="h-4 w-4 text-purple-600" />
+            <span className="text-purple-700">{event.price}</span>
           </motion.div>
         </div>
 
-        <CardHeader className="pb-3">
-          <h3 className="line-clamp-2 group-hover:text-sky-600 transition-colors duration-300">
+        <CardHeader className="pb-4">
+          <h3 className="line-clamp-2 group-hover:text-purple-600 transition-colors duration-300 font-bold text-lg">
             {event.title}
           </h3>
-          <p className="text-muted-foreground line-clamp-2 text-sm">
+          <p className="text-gray-600 line-clamp-2 text-sm leading-relaxed">
             {event.description}
           </p>
         </CardHeader>
 
-        <CardContent className="space-y-2 pb-3">
-          <div className="flex items-center gap-2 text-muted-foreground">
-            <div className="p-1.5 rounded-lg bg-sky-50 border border-sky-100">
-              <Calendar className="h-3.5 w-3.5 text-sky-600" />
+        <CardContent className="space-y-3 pb-4">
+          <div className="flex items-center gap-3 text-gray-700">
+            <div className="p-2 rounded-xl bg-purple-50 border border-purple-200">
+              <Calendar className="h-4 w-4 text-purple-600" />
             </div>
             <span className="text-sm">
               {event.date} • {event.time}
             </span>
           </div>
-          <div className="flex items-center gap-2 text-muted-foreground">
-            <div className="p-1.5 rounded-lg bg-gray-100 border border-gray-200">
-              <MapPin className="h-3.5 w-3.5 text-gray-600" />
+          <div className="flex items-center gap-3 text-gray-700">
+            <div className="p-2 rounded-xl bg-purple-50 border border-purple-200">
+              <MapPin className="h-4 w-4 text-purple-600" />
             </div>
-            <span className="text-sm line-clamp-1">{event.location}</span>
+            <span className="text-sm font-medium">{event.location}</span>
           </div>
         </CardContent>
 
-        <CardFooter>
+        <CardFooter className="pt-2">
           <Button
             asChild
-            className="w-full bg-gradient-to-r from-black via-gray-800 to-sky-500 border-0 shadow-lg hover:opacity-90 hover:scale-105 transition-all duration-300"
+            className="w-full bg-gradient-to-r from-purple-600 to-pink-500 border-0 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 font-bold py-3 text-white"
           >
             <a
               href={event.ticketLink}
               target="_blank"
               rel="noopener noreferrer"
             >
-              Get Tickets
+              🎫 Get Tickets
               <ExternalLink className="ml-2 h-4 w-4" />
             </a>
           </Button>

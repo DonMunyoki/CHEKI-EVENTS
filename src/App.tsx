@@ -42,7 +42,11 @@ export default function App() {
     const loadFilteredEvents = async () => {
       try {
         setLoading(true);
-        const eventsData = await apiService.getEvents(selectedCategory, searchQuery);
+        // When "All" is selected, don't pass category filter to API
+        const categoryFilter = selectedCategory === "All" ? undefined : selectedCategory;
+        const searchFilter = searchQuery || undefined;
+        
+        const eventsData = await apiService.getEvents(categoryFilter, searchFilter);
         setEvents(eventsData);
         setError(null);
       } catch (err) {
@@ -53,9 +57,8 @@ export default function App() {
       }
     };
 
-    if (selectedCategory !== "All" || searchQuery) {
-      loadFilteredEvents();
-    }
+    // Always load events when filters change
+    loadFilteredEvents();
   }, [searchQuery, selectedCategory]);
 
   // Filter events based on search and category
@@ -71,10 +74,10 @@ export default function App() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-sky-50 to-blue-100 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-purple-100 via-pink-50 to-blue-100 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-sky-500 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading amazing events...</p>
+          <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-purple-500 mx-auto mb-6"></div>
+          <p className="text-gray-700 text-lg font-medium">🎪 Loading amazing events...</p>
         </div>
       </div>
     );
@@ -82,16 +85,16 @@ export default function App() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-sky-50 to-blue-100 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-purple-100 via-pink-50 to-blue-100 flex items-center justify-center">
         <div className="text-center">
-          <CalendarDays className="h-16 w-16 text-red-500 mx-auto mb-4" />
-          <h2 className="text-2xl font-bold text-gray-800 mb-2">Oops!</h2>
-          <p className="text-gray-600 mb-4">{error}</p>
+          <CalendarDays className="h-20 w-20 text-red-500 mx-auto mb-6" />
+          <h2 className="text-3xl font-bold text-gray-800 mb-4">Oops!</h2>
+          <p className="text-gray-600 mb-6 text-lg">{error}</p>
           <button 
             onClick={() => window.location.reload()}
-            className="px-6 py-2 bg-sky-500 text-white rounded-lg hover:bg-sky-600 transition-colors"
+            className="px-8 py-3 bg-gradient-to-r from-purple-600 to-pink-500 text-white rounded-xl hover:shadow-lg transition-all duration-300 font-semibold"
           >
-            Try Again
+            🔄 Try Again
           </button>
         </div>
       </div>
@@ -99,7 +102,7 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-sky-50 to-blue-100">
+    <div className="min-h-screen bg-gradient-to-br from-purple-100 via-pink-50 to-blue-100">
       <Header userName="Guest" onLogout={() => {}} />
       
       <div className="container mx-auto px-4 py-8">
@@ -121,18 +124,18 @@ export default function App() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="text-center py-16"
+            className="text-center py-20"
           >
-            <CalendarDays className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-gray-700 mb-2">No events found</h3>
-            <p className="text-gray-500">Try adjusting your search or filters</p>
+            <CalendarDays className="h-20 w-20 text-gray-400 mx-auto mb-6" />
+            <h3 className="text-2xl font-semibold text-gray-700 mb-4">No events found</h3>
+            <p className="text-gray-500 text-lg">Try adjusting your search or filters</p>
           </motion.div>
         ) : (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mt-10"
           >
             {filteredEvents.map((event, index) => (
               <EventCard key={event.id} event={event} index={index} />
