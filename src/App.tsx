@@ -70,14 +70,14 @@ export default function App() {
     },
     "Education": { 
       icon: <GraduationCap className="h-8 w-8" />, 
-      title: "Education",
+      title: "Education & Learning",
       description: "Career fairs, workshops, and academic events",
       image: "https://images.unsplash.com/photo-1509062522246-3755977927d7?w=400&h=300&fit=crop&crop=center&auto=format",
       color: "from-purple-600 to-indigo-600"
     },
     "Business": { 
       icon: <Briefcase className="h-8 w-8" />, 
-      title: "Business",
+      title: "Business & Networking",
       description: "Networking, conferences, and trade shows",
       image: "https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=400&h=300&fit=crop&crop=center&auto=format",
       color: "from-green-600 to-emerald-600"
