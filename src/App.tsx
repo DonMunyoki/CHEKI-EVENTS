@@ -63,7 +63,7 @@ export default function App() {
   }> = {
     "Technology": { 
       icon: <Code className="h-8 w-8" />, 
-      title: "Technology",
+      title: "Tech Events",
       description: "Tech conferences, workshops, and hackathons",
       image: "https://images.unsplash.com/photo-1550745165-9bc0b252726a?w=400&h=300&fit=crop&crop=center&auto=format",
       color: "from-blue-600 to-cyan-600"
@@ -84,67 +84,74 @@ export default function App() {
     },
     "Music": { 
       icon: <Music className="h-8 w-8" />, 
-      title: "Music",
-      description: "Concerts, festivals, and live performances",
+      title: "Music & Concerts",
+      description: "Live concerts, festivals, and performances",
       image: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=400&h=300&fit=crop&crop=center&auto=format",
       color: "from-pink-600 to-rose-600"
     },
     "Art": { 
       icon: <Palette className="h-8 w-8" />, 
-      title: "Art",
+      title: "Art & Culture",
       description: "Exhibitions, galleries, and creative workshops",
       image: "https://images.unsplash.com/photo-1536924940846-227afb31e2a5?w=400&h=300&fit=crop&crop=center&auto=format",
       color: "from-orange-600 to-red-600"
     },
     "Food": { 
       icon: <Utensils className="h-8 w-8" />, 
-      title: "Food",
+      title: "Food & Dining",
       description: "Food festivals, tastings, and culinary events",
       image: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&h=300&fit=crop&crop=center&auto=format",
       color: "from-yellow-600 to-amber-600"
     },
     "Sports": { 
       icon: <Trophy className="h-8 w-8" />, 
-      title: "Sports",
+      title: "Sports & Fitness",
       description: "Tournaments, marathons, and fitness events",
       image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop&crop=center&auto=format",
       color: "from-red-600 to-pink-600"
     },
     "Science": { 
       icon: <Microscope className="h-8 w-8" />, 
-      title: "Science",
+      title: "Science & Innovation",
       description: "Innovation fairs, workshops, and research",
       image: "https://images.unsplash.com/photo-1532099436881-5291b1d6d0a?w=400&h=300&fit=crop&crop=center&auto=format",
       color: "from-teal-600 to-cyan-600"
     },
     "Gaming": { 
       icon: <Gamepad2 className="h-8 w-8" />, 
-      title: "Gaming",
+      title: "Gaming & Esports",
       description: "Tournaments, esports, and gaming events",
       image: "https://images.unsplash.com/photo-1542751371-fc94c4e36a77?w=400&h=300&fit=crop&crop=center&auto=format",
       color: "from-indigo-600 to-purple-600"
     },
     "Comedy": { 
       icon: <Sparkles className="h-8 w-8" />, 
-      title: "Comedy",
+      title: "Comedy & Entertainment",
       description: "Stand-up shows, open mics, and comedy nights",
       image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop&crop=center&auto=format",
       color: "from-yellow-400 to-orange-500"
     },
     "Fashion": { 
       icon: <Star className="h-8 w-8" />, 
-      title: "Fashion",
+      title: "Fashion & Style",
       description: "Fashion shows, exhibitions, and style events",
       image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400&h=300&fit=crop&crop=center&auto=format",
       color: "from-pink-500 to-purple-600"
     },
     "Clubbing": { 
       icon: <Zap className="h-8 w-8" />, 
-      title: "Clubbing",
+      title: "Nightlife & Parties",
       description: "Nightlife, parties, and club events",
       image: "https://images.unsplash.com/photo-1516450360452-9312f51686ad?w=400&h=300&fit=crop&crop=center&auto=format",
       color: "from-purple-600 to-pink-600"
     },
+    "Theater": { 
+      icon: <Sparkles className="h-8 w-8" />, 
+      title: "Theater & Drama",
+      description: "Theater performances, plays, and dramatic arts",
+      image: "https://images.unsplash.com/photo-1503095487142-2f5e2cd5e44?w=400&h=300&fit=crop&crop=center&auto=format",
+      color: "from-red-700 to-pink-700"
+    }
   };
 
   if (loading && !selectedCategory) {
@@ -196,7 +203,40 @@ export default function App() {
       <div className="min-h-screen bg-gray-500 flex flex-col">
         <Header userName="Guest" onLogout={() => {}} />
         
-        <div className="flex-1 container mx-auto px-4 py-8">
+        {/* Top Navigation Bar */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="fixed top-16 left-0 right-0 bg-white/95 backdrop-blur-lg border-t border-gray-300 shadow-lg z-50"
+        >
+          <div className="container mx-auto px-4 py-3">
+            <div className="flex justify-center gap-2 md:gap-4 overflow-x-auto">
+              {categories.map((category) => (
+                <motion.button
+                  key={category}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => setSelectedCategory(category)}
+                  className={`flex flex-col items-center gap-1 px-3 py-2 rounded-xl transition-all duration-300 ${
+                    selectedCategory === category
+                      ? `bg-gradient-to-r ${categoryInfo[category]?.color} text-white shadow-lg`
+                      : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                  }`}
+                >
+                  <div className="h-5 w-5">
+                    {categoryInfo[category]?.icon}
+                  </div>
+                  <span className="text-xs font-medium whitespace-nowrap">
+                    {categoryInfo[category]?.title || category}
+                  </span>
+                </motion.button>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+        
+        <div className="flex-1 container mx-auto px-4 py-8 pt-20">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -242,7 +282,7 @@ export default function App() {
                   </motion.div>
 
                   <div className="absolute bottom-4 left-4 right-4">
-                    <h3 className="text-white font-bold text-lg mb-1">{categoryInfo[category]?.title}</h3>
+                    <h3 className="text-white font-bold text-lg mb-1">{categoryInfo[category]?.title || category}</h3>
                     <p className="text-gray-200 text-sm line-clamp-2">{categoryInfo[category]?.description}</p>
                   </div>
                 </div>
@@ -254,39 +294,6 @@ export default function App() {
             ))}
           </div>
         </div>
-
-        {/* Top Navigation Bar */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="fixed top-16 left-0 right-0 bg-white/95 backdrop-blur-lg border-t border-gray-300 shadow-lg z-50"
-        >
-          <div className="container mx-auto px-4 py-3">
-            <div className="flex justify-center gap-2 md:gap-4 overflow-x-auto">
-              {categories.map((category) => (
-                <motion.button
-                  key={category}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => setSelectedCategory(category)}
-                  className={`flex flex-col items-center gap-1 px-3 py-2 rounded-xl transition-all duration-300 ${
-                    selectedCategory === category
-                      ? `bg-gradient-to-r ${categoryInfo[category]?.color} text-white shadow-lg`
-                      : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                  }`}
-                >
-                  <div className="h-5 w-5">
-                    {categoryInfo[category]?.icon}
-                  </div>
-                  <span className="text-xs font-medium whitespace-nowrap">
-                    {category}
-                  </span>
-                </motion.button>
-              ))}
-            </div>
-          </div>
-        </motion.div>
       </div>
     );
   }
@@ -296,7 +303,40 @@ export default function App() {
     <div className="min-h-screen bg-gray-500 flex flex-col">
       <Header userName="Guest" onLogout={() => {}} />
       
-      <div className="flex-1 container mx-auto px-4 py-8 pb-20">
+      {/* Top Navigation Bar */}
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.3 }}
+        className="fixed top-16 left-0 right-0 bg-white/95 backdrop-blur-lg border-t border-gray-300 shadow-lg z-50"
+      >
+        <div className="container mx-auto px-4 py-3">
+          <div className="flex justify-center gap-2 md:gap-4 overflow-x-auto">
+            {categories.map((category) => (
+              <motion.button
+                key={category}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setSelectedCategory(category)}
+                className={`flex flex-col items-center gap-1 px-3 py-2 rounded-xl transition-all duration-300 ${
+                  selectedCategory === category
+                    ? `bg-gradient-to-r ${categoryInfo[category]?.color} text-white shadow-lg`
+                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                }`}
+              >
+                <div className="h-5 w-5">
+                  {categoryInfo[category]?.icon}
+                </div>
+                <span className="text-xs font-medium whitespace-nowrap">
+                  {categoryInfo[category]?.title || category}
+                </span>
+              </motion.button>
+            ))}
+          </div>
+        </div>
+      </motion.div>
+      
+      <div className="flex-1 container mx-auto px-4 py-8 pb-20 pt-20">
         {/* Back Button */}
         <motion.button
           initial={{ opacity: 0, x: -20 }}
@@ -320,7 +360,7 @@ export default function App() {
             <div className={`p-3 rounded-full bg-gradient-to-r ${categoryInfo[selectedCategory]?.color} text-white shadow-lg`}>
               {categoryInfo[selectedCategory]?.icon}
             </div>
-            <h1 className="text-3xl font-bold text-white">{categoryInfo[selectedCategory]?.title}</h1>
+            <h1 className="text-3xl font-bold text-white">{categoryInfo[selectedCategory]?.title || selectedCategory}</h1>
           </div>
           <p className="text-gray-200 text-lg">{categoryInfo[selectedCategory]?.description}</p>
         </motion.div>
@@ -335,7 +375,7 @@ export default function App() {
           <div className="max-w-2xl mx-auto">
             <input
               type="text"
-              placeholder={`Search ${selectedCategory.toLowerCase()} events...`}
+              placeholder={`Search ${categoryInfo[selectedCategory]?.title || selectedCategory} events...`}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full px-6 py-4 bg-white/90 border border-gray-300 rounded-2xl text-gray-800 placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-300"
@@ -397,39 +437,6 @@ export default function App() {
           </motion.div>
         )}
       </div>
-
-      {/* Top Navigation Bar */}
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.3 }}
-        className="fixed top-16 left-0 right-0 bg-white/95 backdrop-blur-lg border-t border-gray-300 shadow-lg z-50"
-      >
-        <div className="container mx-auto px-4 py-3">
-          <div className="flex justify-center gap-2 md:gap-4 overflow-x-auto">
-            {categories.map((category) => (
-              <motion.button
-                key={category}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => setSelectedCategory(category)}
-                className={`flex flex-col items-center gap-1 px-3 py-2 rounded-xl transition-all duration-300 ${
-                  selectedCategory === category
-                    ? `bg-gradient-to-r ${categoryInfo[category]?.color} text-white shadow-lg`
-                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                }`}
-              >
-                <div className="h-5 w-5">
-                  {categoryInfo[category]?.icon}
-                </div>
-                <span className="text-xs font-medium whitespace-nowrap">
-                  {category}
-                </span>
-              </motion.button>
-            ))}
-          </div>
-        </div>
-      </motion.div>
     </div>
   );
 }

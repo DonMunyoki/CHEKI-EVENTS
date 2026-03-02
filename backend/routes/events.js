@@ -21,7 +21,23 @@ db.exec(`
     ticketLink TEXT NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
   );
+  
+  CREATE TABLE IF NOT EXISTS categories (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL UNIQUE
+  );
 `);
+
+// Insert categories
+const insertCategory = db.prepare('INSERT OR IGNORE INTO categories (name) VALUES (?)');
+const categories = [
+  'Technology', 'Education', 'Business', 'Music', 'Art', 'Food', 'Sports', 'Science', 'Gaming', 'Comedy', 'Fashion', 'Clubbing', 'Theater'
+];
+categories.forEach(category => {
+  insertCategory.run(category);
+});
+
+console.log(' Categories: Categories inserted successfully');
 
 // Insert current Nairobi events this month
 const currentEvents = [
@@ -397,7 +413,18 @@ const currentEvents = [
     category: "Clubbing",
     price: "KES 600",
     image: "https://images.unsplash.com/photo-1519675869491-65a383e27e6f?w=800&h=600&fit=crop&crop=center&auto=format",
-    ticketLink: "https://havanabar.com/latin-night-2026"
+    ticketLink: "https://havanabar.co.ke/latin-night-2026"
+  },
+  {
+    title: "Shakespeare in the Park",
+    description: "Open-air theater performance of Shakespeare's classic plays under the stars at Nairobi's most beautiful amphitheater.",
+    date: "March 25-26, 2026",
+    time: "6:00 PM - 9:00 PM",
+    location: "Nairobi National Museum Grounds",
+    category: "Theater",
+    price: "KES 800",
+    image: "https://images.unsplash.com/photo-1503095487142-2f5e2cd5e44?w=800&h=600&fit=crop&crop=center&auto=format",
+    ticketLink: "https://ticketskenya.com/shakespeare-park-2026"
   }
 ];
 
