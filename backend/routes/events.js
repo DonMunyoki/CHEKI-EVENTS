@@ -38,7 +38,7 @@ const currentEvents = [
   },
   {
     title: "Sauti Sol Live in Concert",
-    description: "Kenya's award-winning band Sauti Sol performs their greatest hits in an electrifying live concert experience at the KICC.",
+    description: "Kenya's award-winning band Sauti Sol performs their greatest hits in an electrifying live concert experience at KICC.",
     date: "March 8, 2026",
     time: "7:00 PM",
     location: "Kenyatta International Convention Centre (KICC)",
@@ -59,6 +59,138 @@ const currentEvents = [
     ticketLink: "https://ticketsasa.com/events/nairobi-tech-week-2026"
   },
   {
+    title: "AI & Machine Learning Summit",
+    description: "Deep dive into artificial intelligence and machine learning with hands-on workshops, expert talks, and networking with AI professionals.",
+    date: "March 18-19, 2026",
+    time: "9:00 AM - 6:00 PM",
+    location: "iHub, Nairobi",
+    category: "Technology",
+    price: "KES 3,000",
+    image: "https://images.unsplash.com/photo-1677448608869-83e6b6e851f?w=800&h=600&fit=crop&crop=entropy&auto=format",
+    ticketLink: "https://ticketsasa.com/events/ai-ml-summit-2026"
+  },
+  {
+    title: "Blockchain & Web3 Workshop",
+    description: "Learn about blockchain technology, cryptocurrency, and Web3 development. Perfect for developers and tech enthusiasts.",
+    date: "March 25, 2026",
+    time: "10:00 AM - 4:00 PM",
+    location: "Nailab, Nairobi",
+    category: "Technology",
+    price: "KES 1,500",
+    image: "https://images.unsplash.com/photo-1639322533846-2b9be1b55b6?w=800&h=600&fit=crop&crop=entropy&auto=format",
+    ticketLink: "https://ticketsasa.com/events/blockchain-web3-workshop-2026"
+  },
+  {
+    title: "Mobile App Development Bootcamp",
+    description: "Intensive 3-day bootcamp covering React Native, Flutter, and cross-platform mobile development. Build real apps!",
+    date: "March 22-24, 2026",
+    time: "9:00 AM - 5:00 PM",
+    location: "Moringa School, Nairobi",
+    category: "Technology",
+    price: "KES 4,000",
+    image: "https://images.unsplash.com/photo-1512941970525-778782e5e6b?w=800&h=600&fit=crop&crop=entropy&auto=format",
+    ticketLink: "https://ticketsasa.com/events/mobile-app-bootcamp-2026"
+  },
+  {
+    title: "Cybersecurity Conference",
+    description: "Latest trends in cybersecurity, ethical hacking, and digital protection. Network with security professionals.",
+    date: "March 30, 2026",
+    time: "8:00 AM - 6:00 PM",
+    location: "USIU, Nairobi",
+    category: "Technology",
+    price: "KES 2,500",
+    image: "https://images.unsplash.com/photo-1563013544-824ae1a706d3?w=800&h=600&fit=crop&crop=entropy&auto=format",
+    ticketLink: "https://ticketsasa.com/events/cybersecurity-conference-2026"
+  },
+  {
+    title: "University Career Fair 2026",
+    description: "Connect with top employers, explore internship opportunities, and launch your career. Over 100 companies participating!",
+    date: "March 15-16, 2026",
+    time: "10:00 AM - 4:00 PM",
+    location: "Kenyatta University, Nairobi",
+    category: "Education",
+    price: "Free",
+    image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&h=600&fit=crop&crop=entropy&auto=format",
+    ticketLink: "https://ticketsasa.com/events/university-career-fair-2026"
+  },
+  {
+    title: "Study Abroad Information Session",
+    description: "Learn about international study opportunities, scholarships, and application processes. Meet university representatives.",
+    date: "March 20, 2026",
+    time: "2:00 PM - 6:00 PM",
+    location: "Strathmore University, Nairobi",
+    category: "Education",
+    price: "Free",
+    image: "https://images.unsplash.com/photo-1523050854058-7f4a7046a00a?w=800&h=600&fit=crop&crop=entropy&auto=format",
+    ticketLink: "https://ticketsasa.com/events/study-abroad-session-2026"
+  },
+  {
+    title: "Research Symposium 2026",
+    description: "Academic research presentations, poster sessions, and networking with scholars from various universities.",
+    date: "March 27-28, 2026",
+    time: "9:00 AM - 5:00 PM",
+    location: "University of Nairobi, Nairobi",
+    category: "Education",
+    price: "KES 500",
+    image: "https://images.unsplash.com/photo-1434030256770-791f26fb840b?w=800&h=600&fit=crop&crop=entropy&auto=format",
+    ticketLink: "https://ticketsasa.com/events/research-symposium-2026"
+  },
+  {
+    title: "Coding Competition Finals",
+    description: "Watch top student programmers compete in algorithm challenges and problem-solving. Exciting prizes and recognition!",
+    date: "March 23, 2026",
+    time: "1:00 PM - 6:00 PM",
+    location: "JKUAT, Nairobi",
+    category: "Education",
+    price: "KES 300",
+    image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f?w=800&h=600&fit=crop&crop=entropy&auto=format",
+    ticketLink: "https://ticketsasa.com/events/coding-competition-2026"
+  },
+  {
+    title: "Science Innovation Fair",
+    description: "Showcase of innovative science projects, experiments, and discoveries by students and researchers.",
+    date: "March 29-30, 2026",
+    time: "10:00 AM - 4:00 PM",
+    location: "Alliance High School, Nairobi",
+    category: "Science",
+    price: "KES 400",
+    image: "https://images.unsplash.com/photo-1532099436881-5291b1d6d0a?w=800&h=600&fit=crop&crop=entropy&auto=format",
+    ticketLink: "https://ticketsasa.com/events/science-innovation-fair-2026"
+  },
+  {
+    title: "Robotics Workshop",
+    description: "Hands-on robotics workshop covering Arduino, Raspberry Pi, and robot building. No experience required!",
+    date: "March 17, 2026",
+    time: "9:00 AM - 3:00 PM",
+    location: "Nairobi Technical Institute, Nairobi",
+    category: "Science",
+    price: "KES 800",
+    image: "https://images.unsplash.com/photo-1561557949-6682a84e00b7?w=800&h=600&fit=crop&crop=entropy&auto=format",
+    ticketLink: "https://ticketsasa.com/events/robotics-workshop-2026"
+  },
+  {
+    title: "Gaming Tournament 2026",
+    description: "Epic gaming tournament with FIFA, Call of Duty, and Fortnite competitions. Amazing prizes for winners!",
+    date: "March 26-27, 2026",
+    time: "10:00 AM - 8:00 PM",
+    location: "The Hub, Nairobi",
+    category: "Gaming",
+    price: "KES 600",
+    image: "https://images.unsplash.com/photo-1542751371-fc94c4e36a77?w=800&h=600&fit=crop&crop=entropy&auto=format",
+    ticketLink: "https://ticketsasa.com/events/gaming-tournament-2026"
+  },
+  {
+    title: "ESports Championship",
+    description: "Professional esports competition featuring League of Legends, Valorant, and CS:GO teams from across East Africa.",
+    date: "March 31 - April 1, 2026",
+    time: "2:00 PM - 10:00 PM",
+    location: "Kasarani Arena, Nairobi",
+    category: "Gaming",
+    price: "KES 1,200",
+    image: "https://images.unsplash.com/photo-15115182236-0eecb9400b47?w=800&h=600&fit=crop&crop=entropy&auto=format",
+    ticketLink: "https://ticketsasa.com/events/esports-championship-2026"
+  },
+  {
     title: "Comedy Night with Eric Omondi",
     description: "Kenya's top comedian Eric Omondi brings his latest stand-up comedy show to Nairobi with special guest performances.",
     date: "March 10, 2026",
@@ -68,6 +200,17 @@ const currentEvents = [
     price: "KES 2,000",
     image: "https://images.unsplash.com/photo-1516232698864-2b8c1fc6ab1c?w=800&h=600&fit=crop&crop=entropy&auto=format",
     ticketLink: "https://ticketsasa.com/events/eric-omondi-comedy-night-2026"
+  },
+  {
+    title: "Stand-up Comedy Open Mic",
+    description: "Open mic night for aspiring comedians. Try your material and get feedback from the audience.",
+    date: "Every Wednesday in March",
+    time: "7:00 PM - 10:00 PM",
+    location: "The Alchemist, Westlands",
+    category: "Comedy",
+    price: "KES 500",
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=600&fit=crop&crop=entropy&auto=format",
+    ticketLink: "https://ticketsasa.com/events/open-mic-comedy-2026"
   },
   {
     title: "Nairobi Fashion Week",
@@ -81,6 +224,17 @@ const currentEvents = [
     ticketLink: "https://ticketsasa.com/events/nairobi-fashion-week-2026"
   },
   {
+    title: "Street Fashion Showcase",
+    description: "Urban street fashion exhibition featuring local designers, live music, and pop-up shops.",
+    date: "March 25, 2026",
+    time: "12:00 PM - 8:00 PM",
+    location: "Westgate Mall, Nairobi",
+    category: "Fashion",
+    price: "KES 800",
+    image: "https://images.unsplash.com/photo-1445205170238-7e693166bb5e?w=800&h=600&fit=crop&crop=entropy&auto=format",
+    ticketLink: "https://ticketsasa.com/events/street-fashion-showcase-2026"
+  },
+  {
     title: "Nairobi Marathon 2026",
     description: "Annual Nairobi Marathon featuring 42km, 21km, 10km, and 5km races. Join thousands of runners in Kenya's premier marathon event.",
     date: "March 23, 2026",
@@ -90,6 +244,17 @@ const currentEvents = [
     price: "KES 1,000",
     image: "https://images.unsplash.com/photo-1544717297-fa95b6ee9643?w=800&h=600&fit=crop&crop=entropy&auto=format",
     ticketLink: "https://ticketsasa.com/events/nairobi-marathon-2026"
+  },
+  {
+    title: "Basketball Tournament",
+    description: "Inter-university basketball championship with teams from across Kenya competing for the championship title.",
+    date: "March 28-30, 2026",
+    time: "9:00 AM - 6:00 PM",
+    location: "Kenyatta University Gymnasium, Nairobi",
+    category: "Sports",
+    price: "KES 300",
+    image: "https://images.unsplash.com/photo-1546519638-68e1aa3d9e76?w=800&h=600&fit=crop&crop=entropy&auto=format",
+    ticketLink: "https://ticketsasa.com/events/basketball-tournament-2026"
   },
   {
     title: "Kenya Food Festival",
@@ -103,6 +268,17 @@ const currentEvents = [
     ticketLink: "https://ticketsasa.com/events/kenya-food-festival-2026"
   },
   {
+    title: "Street Food Festival",
+    description: "Experience Nairobi's vibrant street food scene with local vendors, live cooking, and cultural performances.",
+    date: "March 18-19, 2026",
+    time: "11:00 AM - 9:00 PM",
+    location: "Ngong Racecourse, Nairobi",
+    category: "Food",
+    price: "KES 400",
+    image: "https://images.unsplash.com/photo-1504674900247-087a2346ec7d?w=800&h=600&fit=crop&crop=entropy&auto=format",
+    ticketLink: "https://ticketsasa.com/events/street-food-festival-2026"
+  },
+  {
     title: "Nairobi Art Biennale",
     description: "Contemporary African art exhibition featuring works from over 50 artists across the continent. Includes workshops and artist talks.",
     date: "March 28-30, 2026",
@@ -114,6 +290,17 @@ const currentEvents = [
     ticketLink: "https://ticketsasa.com/events/nairobi-art-biennale-2026"
   },
   {
+    title: "Digital Art Exhibition",
+    description: "Cutting-edge digital art showcase featuring NFTs, VR experiences, and interactive installations.",
+    date: "March 22-24, 2026",
+    time: "11:00 AM - 7:00 PM",
+    location: "Creatives Garage, Nairobi",
+    category: "Art",
+    price: "KES 600",
+    image: "https://images.unsplash.com/photo-1633412802914-f474b0e3431?w=800&h=600&fit=crop&crop=entropy&auto=format",
+    ticketLink: "https://ticketsasa.com/events/digital-art-exhibition-2026"
+  },
+  {
     title: "Nairobi Jazz Festival",
     description: "Three-day jazz festival featuring international and local jazz artists, workshops, and jam sessions in the heart of Nairobi.",
     date: "March 31 - April 2, 2026",
@@ -123,6 +310,17 @@ const currentEvents = [
     price: "KES 2,500",
     image: "https://images.unsplash.com/photo-1463100095044-357583b65b7c?w=800&h=600&fit=crop&crop=entropy&auto=format",
     ticketLink: "https://ticketsasa.com/events/nairobi-jazz-festival-2026"
+  },
+  {
+    title: "Electronic Music Festival",
+    description: "Two-day electronic music festival with international DJs, light shows, and an incredible atmosphere.",
+    date: "March 29-30, 2026",
+    time: "4:00 PM - 2:00 AM",
+    location: "KICC Grounds, Nairobi",
+    category: "Music",
+    price: "KES 3,000",
+    image: "https://images.unsplash.com/photo-1470225620780-dba8ba8b4996?w=800&h=600&fit=crop&crop=entropy&auto=format",
+    ticketLink: "https://ticketsasa.com/events/electronic-music-festival-2026"
   },
   {
     title: "Friday Night Party at The Alchemist",
