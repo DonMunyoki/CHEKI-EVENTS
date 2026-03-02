@@ -5,29 +5,23 @@ const jwt = require('jsonwebtoken');
 const validator = require('validator');
 const Database = require('better-sqlite3');
 
-// Create in-memory database directly in routes
-let db;
-try {
-  db = new Database(':memory:');
-  console.log(' Auth: In-memory database created successfully');
-  
-  // Initialize tables
-  db.exec(`
-    CREATE TABLE IF NOT EXISTS users (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      admission_number TEXT UNIQUE NOT NULL,
-      email TEXT UNIQUE NOT NULL,
-      password_hash TEXT NOT NULL,
-      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
-    );
-  `);
-  
-  console.log(' Auth: Users table created in memory');
-} catch (err) {
-  console.error(' Auth: Failed to create in-memory database:', err);
-  db = null;
-}
+// Create shared in-memory database
+const db = new Database(':memory:');
+console.log(' Auth: In-memory database created successfully');
+
+// Initialize tables
+db.exec(`
+  CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    admission_number TEXT UNIQUE NOT NULL,
+    email TEXT UNIQUE NOT NULL,
+    password_hash TEXT NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  );
+`);
+
+console.log(' Auth: Users table created in memory');
 
 // Register user
 router.post('/register', async (req, res) => {
