@@ -24,18 +24,18 @@ interface EventCardProps {
 }
 
 const categoryColors: Record<string, string> = {
-  Technology: "bg-gradient-to-r from-sky-600 to-blue-600",
-  Education: "bg-gradient-to-r from-blue-600 to-navy-600",
-  Business: "bg-gradient-to-r from-sky-500 to-blue-500",
-  Music: "bg-gradient-to-r from-blue-500 to-sky-500",
-  Art: "bg-gradient-to-r from-sky-600 to-blue-600",
-  Food: "bg-gradient-to-r from-blue-600 to-navy-600",
-  Sports: "bg-gradient-to-r from-sky-500 to-blue-500",
-  Science: "bg-gradient-to-r from-blue-600 to-sky-600",
-  Gaming: "bg-gradient-to-r from-sky-500 to-blue-500",
-  Comedy: "bg-gradient-to-r from-blue-600 to-navy-600",
-  Fashion: "bg-gradient-to-r from-sky-500 to-blue-500",
-  Clubbing: "bg-gradient-to-r from-blue-600 to-sky-600",
+  Technology: "bg-gradient-to-r from-blue-600 to-cyan-600",
+  Education: "bg-gradient-to-r from-purple-600 to-indigo-600",
+  Business: "bg-gradient-to-r from-green-600 to-emerald-600",
+  Music: "bg-gradient-to-r from-pink-600 to-rose-600",
+  Art: "bg-gradient-to-r from-orange-600 to-red-600",
+  Food: "bg-gradient-to-r from-yellow-600 to-amber-600",
+  Sports: "bg-gradient-to-r from-red-600 to-pink-600",
+  Science: "bg-gradient-to-r from-teal-600 to-cyan-600",
+  Gaming: "bg-gradient-to-r from-indigo-600 to-purple-600",
+  Comedy: "bg-gradient-to-r from-yellow-400 to-orange-500",
+  Fashion: "bg-gradient-to-r from-pink-500 to-purple-600",
+  Clubbing: "bg-gradient-to-r from-purple-600 to-pink-600",
 };
 
 // Image with fallback component
@@ -56,7 +56,7 @@ const ImageWithFallback: React.FC<{ src: string; alt: string; className: string 
   return (
     <div className={`relative ${className}`}>
       {!imgLoaded && (
-        <div className="absolute inset-0 bg-gradient-to-br from-sky-900 to-blue-900 animate-pulse" />
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-400 to-gray-600 animate-pulse" />
       )}
       <img
         src={imgError ? fallbackImage : src}
@@ -77,7 +77,7 @@ export function EventCard({ event, index }: EventCardProps) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: index * 0.1 }}
     >
-      <Card className="overflow-hidden hover:shadow-2xl transition-all duration-300 border border-sky-800/50 bg-black/50 rounded-2xl hover:scale-105">
+      <Card className="overflow-hidden hover:shadow-2xl transition-all duration-300 border border-gray-300 bg-white rounded-2xl hover:scale-105">
         <div className="relative h-64 w-full overflow-hidden">
           <motion.div
             whileHover={{ scale: 1.08 }}
@@ -102,37 +102,37 @@ export function EventCard({ event, index }: EventCardProps) {
           </Badge>
 
           <motion.div
-            className="absolute top-4 left-4 bg-black/90 backdrop-blur-sm px-4 py-2 rounded-full text-sm flex items-center gap-2 shadow-xl border border-sky-800/50 font-bold"
+            className="absolute top-4 left-4 bg-white/95 backdrop-blur-sm px-4 py-2 rounded-full text-sm flex items-center gap-2 shadow-xl border border-gray-300 font-bold"
             initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2 }}
           >
-            <Ticket className="h-4 w-4 text-sky-400" />
-            <span className="text-sky-300">{event.price}</span>
+            <Ticket className="h-4 w-4 text-blue-600" />
+            <span className="text-gray-800">{event.price}</span>
           </motion.div>
         </div>
 
         <CardHeader className="pb-4">
-          <h3 className="line-clamp-2 group-hover:text-sky-400 transition-colors duration-300 font-bold text-lg text-white">
+          <h3 className="line-clamp-2 group-hover:text-blue-600 transition-colors duration-300 font-bold text-lg text-gray-800">
             {event.title}
           </h3>
-          <p className="text-gray-400 line-clamp-2 text-sm leading-relaxed">
+          <p className="text-gray-600 line-clamp-2 text-sm leading-relaxed">
             {event.description}
           </p>
         </CardHeader>
 
         <CardContent className="space-y-3 pb-4">
-          <div className="flex items-center gap-3 text-gray-300">
-            <div className="p-2 rounded-xl bg-sky-900/50 border border-sky-800/50">
-              <Calendar className="h-4 w-4 text-sky-400" />
+          <div className="flex items-center gap-3 text-gray-600">
+            <div className="p-2 rounded-xl bg-gray-100 border border-gray-300">
+              <Calendar className="h-4 w-4 text-blue-600" />
             </div>
             <span className="text-sm">
               {event.date} • {event.time}
             </span>
           </div>
-          <div className="flex items-center gap-3 text-gray-300">
-            <div className="p-2 rounded-xl bg-sky-900/50 border border-sky-800/50">
-              <MapPin className="h-4 w-4 text-blue-400" />
+          <div className="flex items-center gap-3 text-gray-600">
+            <div className="p-2 rounded-xl bg-gray-100 border border-gray-300">
+              <MapPin className="h-4 w-4 text-purple-600" />
             </div>
             <span className="text-sm font-medium">{event.location}</span>
           </div>
@@ -141,7 +141,7 @@ export function EventCard({ event, index }: EventCardProps) {
         <CardFooter className="pt-2">
           <Button
             asChild
-            className="w-full bg-gradient-to-r from-sky-600 to-blue-600 border-0 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 font-bold py-3 text-white"
+            className="w-full bg-gradient-to-r from-blue-600 to-purple-600 border-0 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 font-bold py-3 text-white"
           >
             <a
               href={event.ticketLink}
