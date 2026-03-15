@@ -73,12 +73,18 @@ const ImageWithFallback: React.FC<{ src: string; alt: string; className: string 
 export function EventCard({ event, index }: EventCardProps) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, delay: index * 0.1 }}
+      initial={{ opacity: 0, y: 50, scale: 0.9 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+      whileHover={{ 
+        scale: 1.05,
+        boxShadow: "0 25px 50px rgba(0, 0, 0, 0.15)"
+      }}
+      className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-2xl transition-all duration-300"
+      style={{ height: '400px', width: '100%' }}
     >
-      <Card className="overflow-hidden hover:shadow-2xl transition-all duration-300 border border-gray-300 bg-white rounded-2xl hover:scale-105">
-        <div className="relative h-64 w-full overflow-hidden">
+      <Card className="overflow-hidden hover:shadow-2xl transition-all duration-300 border border-gray-300 bg-white rounded-2xl hover:scale-105 h-full">
+        <div className="relative h-48 w-full overflow-hidden">
           <motion.div
             whileHover={{ scale: 1.08 }}
             transition={{ duration: 0.4 }}
