@@ -2,8 +2,6 @@ import { useState, useMemo, useEffect } from "react";
 import { Header } from "./components/Header";
 import { FilterBar } from "./components/FilterBar";
 import { EventCard, Event } from "./components/EventCard";
-import { LoginPage } from "./components/LoginPage";
-import { SignUpPage } from "./components/SignUpPage";
 import { motion } from "framer-motion";
 import { CalendarDays } from "lucide-react";
 import { apiService } from "./services/api";
@@ -15,9 +13,6 @@ export default function App() {
   const [categories, setCategories] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userName, setUserName] = useState("");
-  const [showLogin, setShowLogin] = useState(true);
 
   // Load events and categories on component mount
   useEffect(() => {
@@ -39,11 +34,8 @@ export default function App() {
       }
     };
 
-    // Only load data if user is logged in
-    if (isLoggedIn) {
-      loadData();
-    }
-  }, [isLoggedIn]);
+    loadData();
+  }, []);
 
   // Reload events when filters change
   useEffect(() => {
@@ -65,11 +57,9 @@ export default function App() {
       }
     };
 
-    // Only load events when filters change and user is logged in
-    if (isLoggedIn) {
-      loadFilteredEvents();
-    }
-  }, [searchQuery, selectedCategory, isLoggedIn]);
+    // Always load events when filters change
+    loadFilteredEvents();
+  }, [searchQuery, selectedCategory]);
 
   // Filter events based on search and category
   const filteredEvents = useMemo(() => {
@@ -82,41 +72,32 @@ export default function App() {
     });
   }, [events, searchQuery, selectedCategory]);
 
-  const handleLogin = async (admissionNumber: string, password: string) => {
-    // Simulate login - in real app, this would call your backend API
-    setUserName(admissionNumber);
-    setIsLoggedIn(true);
-    setShowLogin(false);
-  };
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-purple-100 via-pink-50 to-blue-100 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-purple-500 mx-auto mb-6"></div>
+          <p className="text-gray-700 text-lg font-medium">🎪 Loading amazing events...</p>
+        </div>
+      </div>
+    );
+  }
 
-  const handleSignUp = async (admissionNumber: string, password: string) => {
-    // Simulate sign up - in real app, this would call your backend API to create user
-    setUserName(admissionNumber);
-    setIsLoggedIn(true);
-    setShowLogin(false);
-  };
-
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    setUserName("");
-    setSearchQuery("");
-    setSelectedCategory("All");
-    setShowLogin(true);
-  };
-
-  const switchToSignUp = () => {
-    setShowLogin(false);
-  };
-
-  const switchToLogin = () => {
-    setShowLogin(true);
-  };
-
-  if (!isLoggedIn) {
-    return showLogin ? (
-      <LoginPage onLogin={handleLogin} onSwitchToSignUp={switchToSignUp} />
-    ) : (
-      <SignUpPage onSignUp={handleSignUp} onSwitchToLogin={switchToLogin} />
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-purple-100 via-pink-50 to-blue-100 flex items-center justify-center">
+        <div className="text-center">
+          <CalendarDays className="h-20 w-20 text-red-500 mx-auto mb-6" />
+          <h2 className="text-3xl font-bold text-gray-800 mb-4">Oops!</h2>
+          <p className="text-gray-600 mb-6 text-lg">{error}</p>
+          <button 
+            onClick={() => window.location.reload()}
+            className="px-8 py-3 bg-gradient-to-r from-purple-600 to-pink-500 text-white rounded-xl hover:shadow-lg transition-all duration-300 font-semibold"
+          >
+            🔄 Try Again
+          </button>
+        </div>
+      </div>
     );
   }
 

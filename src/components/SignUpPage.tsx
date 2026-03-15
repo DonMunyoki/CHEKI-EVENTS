@@ -5,44 +5,37 @@ import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { Logo } from "./Logo";
-import { UserCircle, Hash, UserPlus, Sparkles, Lock, Mail } from "lucide-react";
+import { Hash, UserPlus, Sparkles, Lock, Eye, EyeOff } from "lucide-react";
 
 interface SignUpPageProps {
-  onSignUp: (admissionNumber: string, email: string, password: string) => Promise<void>;
-  onSwitchToLogin: () => void;
+  onSignUp: (admissionNumber: string, password: string) => Promise<void>;
+  onSwitchToLogin?: () => void;
 }
 
-export function SignUpPage({ onSignUp, onSwitchToLogin }: SignUpPageProps) {
+const SignUpPage: React.FC<SignUpPageProps> = ({ onSignUp, onSwitchToLogin }) => {
   const [admissionNumber, setAdmissionNumber] = useState("");
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     setIsLoading(true);
 
-    // Validate admission number format (e.g., 24ZAD108991)
-    const admissionPattern = /^\d{2}[A-Z]{3}\d{6}$/;
-    if (!admissionPattern.test(admissionNumber)) {
-      setError("Please enter a valid admission number (e.g., 24ZAD108991)");
+    // Validate admission number (at least 10 characters)
+    if (admissionNumber.length < 10) {
+      setError("Admission number must be at least 10 characters");
       setIsLoading(false);
       return;
     }
 
-    // Validate email
-    if (!email.trim() || !email.includes('@')) {
-      setError("Please enter a valid email address");
-      setIsLoading(false);
-      return;
-    }
-
-    // Validate password
-    if (password.length < 6) {
-      setError("Password must be at least 6 characters long");
+    // Validate password (exactly 6 characters)
+    if (password.length !== 6) {
+      setError("Password must be exactly 6 characters");
       setIsLoading(false);
       return;
     }
@@ -55,51 +48,77 @@ export function SignUpPage({ onSignUp, onSwitchToLogin }: SignUpPageProps) {
     }
 
     try {
-      await onSignUp(admissionNumber, email, password);
+      await onSignUp(admissionNumber, password);
     } catch (err: any) {
-      setError(err.message || "Registration failed. Please try again.");
+      setError(err.message || "Sign up failed. Please try again.");
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-slate-50 to-sky-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-slate-100 to-sky-100 flex items-center justify-center p-4">
+      {/* Animated background elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <motion.div
+          className="absolute top-20 left-20 w-72 h-72 bg-sky-200 rounded-full mix-blend-multiply filter blur-xl opacity-30"
+          animate={{
+            scale: [1, 1.2, 1],
+            x: [0, 50, 0],
+            y: [0, 30, 0],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+        <motion.div
+          className="absolute bottom-20 right-20 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-30"
+          animate={{
+            scale: [1, 1.3, 1],
+            x: [0, -50, 0],
+            y: [0, -30, 0],
+          }}
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+      </div>
+
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="w-full max-w-md"
+        transition={{ duration: 0.6 }}
+        className="w-full max-w-md relative z-10"
       >
-        <Card className="border-0 shadow-2xl bg-white/80 backdrop-blur-sm">
-          <CardHeader className="text-center pb-2">
-            <motion.div
-              initial={{ scale: 0.8 }}
-              animate={{ scale: 1 }}
-              transition={{ duration: 0.3, delay: 0.2 }}
-              className="mx-auto mb-4"
-            >
-              <Logo size="lg" />
-            </motion.div>
-            <CardTitle className="text-2xl font-bold bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent">
-              Join Cheki Events
-            </CardTitle>
-            <CardDescription className="text-gray-600">
-              Create your account to discover amazing events
+        <div className="text-center mb-8">
+          <div className="flex justify-center mb-4">
+            <Logo size="lg" showText={true} />
+          </div>
+          <motion.p
+            className="text-muted-foreground flex items-center justify-center gap-2"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3 }}
+          >
+            <Sparkles className="h-4 w-4 text-sky-500" />
+            Join Nairobi's Hottest Events
+            <Sparkles className="h-4 w-4 text-sky-500" />
+          </motion.p>
+        </div>
+
+        <Card className="shadow-2xl border-0">
+          <CardHeader className="space-y-1">
+            <CardTitle className="text-center">Student Sign Up</CardTitle>
+            <CardDescription className="text-center">
+              Create your Cheki Events account
             </CardDescription>
           </CardHeader>
-          <CardContent className="pt-2">
+          <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
-              {error && (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm"
-                >
-                  {error}
-                </motion.div>
-              )}
-
               <div className="space-y-2">
                 <Label htmlFor="admissionNumber" className="flex items-center gap-2">
                   <Hash className="h-4 w-4 text-sky-500" />
@@ -108,31 +127,15 @@ export function SignUpPage({ onSignUp, onSwitchToLogin }: SignUpPageProps) {
                 <Input
                   id="admissionNumber"
                   type="text"
-                  placeholder="e.g., 24ZAD108991"
+                  placeholder="Enter your admission number"
                   value={admissionNumber}
                   onChange={(e) => setAdmissionNumber(e.target.value.toUpperCase())}
                   className="border-2 focus:border-sky-500 h-12"
                   required
                 />
                 <p className="text-xs text-muted-foreground">
-                  Format: YYXXX123456 (e.g., 24ZAD108991)
+                  Format: YYCCCNNNNNN (e.g., 24ZAD108991)
                 </p>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="email" className="flex items-center gap-2">
-                  <Mail className="h-4 w-4 text-sky-500" />
-                  Email Address
-                </Label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="your.email@example.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="border-2 focus:border-sky-500 h-12"
-                  required
-                />
               </div>
 
               <div className="space-y-2">
@@ -140,17 +143,27 @@ export function SignUpPage({ onSignUp, onSwitchToLogin }: SignUpPageProps) {
                   <Lock className="h-4 w-4 text-sky-500" />
                   Password
                 </Label>
-                <Input
-                  id="password"
-                  type="password"
-                  placeholder="Create a password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="border-2 focus:border-sky-500 h-12"
-                  required
-                />
+                <div className="relative">
+                  <Input
+                    id="password"
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Create your password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="border-2 focus:border-sky-500 h-12 pr-10"
+                    maxLength={6}
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                  >
+                    {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                  </button>
+                </div>
                 <p className="text-xs text-muted-foreground">
-                  Must be at least 6 characters long
+                  Must be exactly 6 characters
                 </p>
               </div>
 
@@ -159,21 +172,44 @@ export function SignUpPage({ onSignUp, onSwitchToLogin }: SignUpPageProps) {
                   <Lock className="h-4 w-4 text-sky-500" />
                   Confirm Password
                 </Label>
-                <Input
-                  id="confirmPassword"
-                  type="password"
-                  placeholder="Confirm your password"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="border-2 focus:border-sky-500 h-12"
-                  required
-                />
+                <div className="relative">
+                  <Input
+                    id="confirmPassword"
+                    type={showConfirmPassword ? "text" : "password"}
+                    placeholder="Confirm your password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    className="border-2 focus:border-sky-500 h-12 pr-10"
+                    maxLength={6}
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                  >
+                    {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                  </button>
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  Re-enter your password
+                </p>
               </div>
+
+              {error && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-600"
+                >
+                  {error}
+                </motion.div>
+              )}
 
               <Button
                 type="submit"
                 disabled={isLoading}
-                className="w-full h-12 bg-gradient-to-r from-sky-500 to-blue-500 hover:from-sky-600 hover:to-blue-600 transition-all shadow-lg"
+                className="w-full h-12 bg-gradient-to-r from-black via-gray-800 to-sky-500 hover:opacity-90 transition-opacity shadow-lg"
               >
                 {isLoading ? (
                   <div className="flex items-center gap-2">
@@ -196,14 +232,32 @@ export function SignUpPage({ onSignUp, onSwitchToLogin }: SignUpPageProps) {
                     onClick={onSwitchToLogin}
                     className="text-sky-600 hover:text-sky-700 font-medium underline"
                   >
-                    Sign In
+                    Login
                   </button>
                 </p>
               </div>
             </form>
+
+            <div className="mt-6 pt-6 border-t text-center">
+              <p className="text-sm text-muted-foreground">
+                For Riara University Students Only
+              </p>
+            </div>
           </CardContent>
         </Card>
+
+        <motion.div
+          className="mt-6 text-center text-sm text-muted-foreground"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+        >
+          <p>© 2025 Cheki Events • Riara University</p>
+        </motion.div>
       </motion.div>
     </div>
   );
-}
+};
+
+export default SignUpPage;
+export { SignUpPage };
