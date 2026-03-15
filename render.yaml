@@ -1,0 +1,27 @@
+services:
+  # Production Service
+  type: web
+  name: event-ticketing-web-app
+  env: node
+  buildCommand: npm run build
+  startCommand: npm run preview
+  healthCheckPath: /
+  autoDeploy: true
+
+  # Backend Service
+  type: web
+  name: event-ticketing-backend
+  env: node
+  buildCommand: cd backend && npm install
+  startCommand: cd backend && npm start
+  healthCheckPath: /api/categories
+  autoDeploy: true
+
+  # Environment Variables (Production)
+  envVars:
+    - key: REACT_APP_API_URL
+      value: https://event-ticketing-backend.onrender.com/api
+      sync: false
+    - key: JWT_SECRET
+      generateValue: true
+      sync: false
