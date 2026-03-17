@@ -53,7 +53,8 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "npx vite build",
-    "preview": "npx vite preview"
+    "build": "vite build",
+    "preview": "vite preview",
+    "start": "vite preview"
   }
 }
