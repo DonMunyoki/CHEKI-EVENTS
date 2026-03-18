@@ -53,7 +53,8 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "npx vite build",
+    "build": "vite build",
+    "build:alt": "node build.js",
     "preview": "vite preview",
     "start": "vite preview"
   }
