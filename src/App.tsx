@@ -83,17 +83,27 @@ export default function App() {
   }, [events, searchQuery, selectedCategory]);
 
   const handleLogin = async (admissionNumber: string, password: string) => {
-    // Simulate login - in real app, this would call your backend API
-    setUserName(admissionNumber);
-    setIsLoggedIn(true);
-    setShowLogin(false);
+    try {
+      await apiService.login(admissionNumber, password);
+      setUserName(admissionNumber);
+      setIsLoggedIn(true);
+      setShowLogin(false);
+    } catch (error: any) {
+      console.error('Login failed:', error);
+      throw error;
+    }
   };
 
   const handleSignUp = async (admissionNumber: string, password: string) => {
-    // Simulate sign up - in real app, this would call your backend API to create user
-    setUserName(admissionNumber);
-    setIsLoggedIn(true);
-    setShowLogin(false);
+    try {
+      await apiService.register(admissionNumber, password);
+      setUserName(admissionNumber);
+      setIsLoggedIn(true);
+      setShowLogin(false);
+    } catch (error: any) {
+      console.error('Sign up failed:', error);
+      throw error;
+    }
   };
 
   const handleLogout = () => {
@@ -122,7 +132,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-100 via-pink-50 to-blue-100">
-      <Header userName="Guest" onLogout={() => {}} />
+      <Header userName={userName} onLogout={handleLogout} />
       
       <div className="container mx-auto px-4 py-8">
         <motion.div
