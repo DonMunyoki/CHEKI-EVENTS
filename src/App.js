@@ -14,6 +14,13 @@ function App() {
           <p>Price: KES 1,500</p>
           <button>Get Tickets</button>
         </div>
+        <div className="event-card">
+          <h2>Contemporary Art Exhibition</h2>
+          <p>Explore thought-provoking contemporary art pieces</p>
+          <p>Date: March 20, 2026</p>
+          <p>Price: KES 500</p>
+          <button>Get Tickets</button>
+        </div>
       </header>
     </div>
   );
