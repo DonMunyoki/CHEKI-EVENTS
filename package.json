@@ -53,8 +53,9 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "node ./node_modules/vite/bin/vite.js build",
+    "build": "npm run build:alt",
     "build:alt": "node build.js",
+    "build:vite": "node ./node_modules/vite/bin/vite.js build",
     "preview": "vite preview",
     "start": "vite preview"
   }
